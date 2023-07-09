@@ -1,0 +1,1 @@
+enum AdsStatus { sender, carrier }
