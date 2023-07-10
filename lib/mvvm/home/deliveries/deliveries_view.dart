@@ -34,7 +34,14 @@ class _DeliveriesScreenState extends State<DeliveriesScreen>
           destination: "Ümraniye, İstanbul",
           name: "Yunus Emre",
           avatar:
-              "https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/female/68.png")
+              "https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/female/68.png"),
+      CustomAds(
+          date: "25 Haziran Pazar, 22:00",
+          departure: "Küçükçekmece, İstanbul",
+          destination: "Ümraniye, İstanbul",
+          name: "Yunus Emre",
+          avatar:
+              "https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/female/68.png"),
     ]);
   }
 }
