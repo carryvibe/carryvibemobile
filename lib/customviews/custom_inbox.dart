@@ -7,13 +7,15 @@ class CustomInbox extends StatelessWidget {
   final String destination;
   final String avatar;
   final String name;
+  final Function()? onTap;
   const CustomInbox(
       {Key? key,
       required this.date,
       required this.departure,
       required this.destination,
       required this.name,
-      required this.avatar})
+      required this.avatar,
+      this.onTap = null})
       : super(key: key);
 
   @override
@@ -26,7 +28,7 @@ class CustomInbox extends StatelessWidget {
       subTitleText: departure + '>' + destination + '\n' + date,
       icon: Icon(Icons.arrow_forward_ios),
       color: Colors.white,
-      onTap: () => {},
+      onTap: onTap,
     );
   }
 }

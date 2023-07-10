@@ -13,7 +13,7 @@ class CustomMenu extends StatelessWidget {
     return GFListTile(
       avatar: icon,
       titleText: title,
-      icon: Icon(Icons.arrow_forward),
+      icon: const Icon(Icons.arrow_forward),
       color: Colors.white,
       onTap: () => {},
     );

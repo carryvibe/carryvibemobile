@@ -16,7 +16,7 @@ class CustomView extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: constraintDouble),
+          padding: const EdgeInsets.symmetric(horizontal: constraintDouble),
           child: Column(
             mainAxisAlignment: mainAxisAlignment,
             children: children,

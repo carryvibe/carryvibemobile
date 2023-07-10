@@ -70,7 +70,7 @@ class LocationLabels extends StatelessWidget {
         style: robotoRegular.copyWith(
             fontSize: AppConstants.fontSizeDefault, color: Colors.black),
         children: [
-          WidgetSpan(
+          const WidgetSpan(
             child: Icon(
               Icons.arrow_downward_sharp,
               size: 16,

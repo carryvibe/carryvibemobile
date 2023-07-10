@@ -1,5 +1,6 @@
 import 'package:carryvibemobile/customviews/custom_inbox.dart';
 import 'package:carryvibemobile/customviews/custom_view.dart';
+import 'package:carryvibemobile/mvvm/home/inbox/chat/chat_view.dart';
 import 'package:flutter/material.dart';
 import 'package:getwidget/getwidget.dart';
 
@@ -21,12 +22,17 @@ class _InboxScreenState extends State<InboxScreen> {
   Widget build(BuildContext context) {
     return CustomListView(children: [
       CustomInbox(
-          date: "Paz 25 Haziran, 23:10",
-          departure: "Küçükçekmece",
-          destination: "Pendik",
-          name: "Yunus Emre",
-          avatar:
-              "https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/female/68.png")
+        date: "Paz 25 Haziran, 23:10",
+        departure: "Küçükçekmece",
+        destination: "Pendik",
+        name: "Yunus Emre",
+        avatar:
+            "https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/female/68.png",
+        onTap: () {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => ChatView()));
+        },
+      )
     ]);
   }
 }

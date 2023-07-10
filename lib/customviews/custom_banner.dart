@@ -9,7 +9,7 @@ class CustomBanner extends StatelessWidget {
   Widget build(BuildContext context) {
     return GFCard(
       boxFit: BoxFit.cover,
-      content: Text("Kampanya"),
+      content: const Text("Kampanya"),
       buttonBar: GFButtonBar(
         children: <Widget>[AppIcon(assest: IconAssest.logo, width: 30)],
       ),

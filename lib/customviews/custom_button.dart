@@ -10,11 +10,12 @@ class PrimaryButton extends StatelessWidget {
   final Color? textColor;
 
   const PrimaryButton({
+    Key? key,
     required this.text,
     required this.onPressed,
     this.color = appColor,
     this.textColor = null,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -38,9 +39,10 @@ class LabelButton extends StatelessWidget {
   final Function() onPressed;
 
   const LabelButton({
+    Key? key,
     required this.text,
     required this.onPressed,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

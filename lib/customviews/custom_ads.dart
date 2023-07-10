@@ -35,7 +35,7 @@ class CustomAds extends StatelessWidget {
             GFAvatar(
                 backgroundImage: NetworkImage(avatar),
                 shape: GFAvatarShape.circle),
-            SizedBox(
+            const SizedBox(
               width: 8,
             ),
             Text(name)

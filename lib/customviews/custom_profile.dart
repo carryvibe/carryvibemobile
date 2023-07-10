@@ -19,13 +19,13 @@ class CustomProfile extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Spacer(),
+            const Spacer(),
             GFAvatar(
               backgroundImage: NetworkImage(avatar),
               shape: GFAvatarShape.circle,
               size: GFSize.LARGE * 2,
             ),
-            Spacer()
+            const Spacer()
           ],
         ),
         CustomSecondLabel(text: name)

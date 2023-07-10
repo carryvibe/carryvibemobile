@@ -34,35 +34,35 @@ class AppView extends StatelessWidget {
     }
     return Scaffold(
       body: Container(
-        padding: EdgeInsets.all(20.0),
+        padding: const EdgeInsets.all(20.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-                Icon(
+                const Icon(
                   Icons.error_outline,
                   color: Colors.red,
                   size: 80.0,
                 ),
-                SizedBox(height: 20.0),
+                const SizedBox(height: 20.0),
                 Text(
                   title,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 24.0,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(height: 20.0),
+                const SizedBox(height: 20.0),
                 Text(
                   subTitle,
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 16.0),
+                  style: const TextStyle(fontSize: 16.0),
                 ),
-                SizedBox(height: 20.0),
+                const SizedBox(height: 20.0),
                 ElevatedButton(
                   onPressed: () {
                     // Uygulama mağazasına yönlendirme işlemini gerçekleştir
                   },
-                  child: Text('Güncelle'),
+                  child: const Text('Güncelle'),
                 ),
               ] +
               getNextButton(),
@@ -76,7 +76,7 @@ class AppView extends StatelessWidget {
     if (viewModel.appVersion == AppVersion.suggestionUpdate) {
       result.add(ElevatedButton(
         onPressed: () {},
-        child: Text('Devam Et'),
+        child: const Text('Devam Et'),
       ));
     }
     return result;
@@ -94,12 +94,12 @@ class AppView extends StatelessWidget {
           GFButton(
             onPressed: () {},
             shape: GFButtonShape.pills,
-            child: Text("Tamam"),
+            child: const Text("Tamam"),
           ),
           GFButton(
             onPressed: () {},
             shape: GFButtonShape.pills,
-            child: Text("Vazgeç"),
+            child: const Text("Vazgeç"),
           ),
         ],
       ),

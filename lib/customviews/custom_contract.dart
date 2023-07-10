@@ -1,4 +1,6 @@
 import 'package:carryvibemobile/customviews/custom_button.dart';
+import 'package:carryvibemobile/util/app_constants.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 class CustomContract extends StatelessWidget {
@@ -14,12 +16,24 @@ class CustomContract extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(text),
-        LabelButton(text: textButton, onPressed: onPressed)
-      ],
+    return RichText(
+      textAlign: TextAlign.center,
+      text: TextSpan(
+        text: (text + " "),
+        style: DefaultTextStyle.of(context)
+            .style
+            .copyWith(fontSize: AppConstants.fontSizeLarge),
+        children: <TextSpan>[
+          TextSpan(
+            text: textButton,
+            style: const TextStyle(
+              color: appColor,
+              decoration: TextDecoration.underline,
+            ),
+            recognizer: TapGestureRecognizer()..onTap = onPressed,
+          )
+        ],
+      ),
     );
   }
 }
