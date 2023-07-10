@@ -55,3 +55,34 @@ class CustomSubLabel extends StatelessWidget {
     );
   }
 }
+
+class LocationLabels extends StatelessWidget {
+  final String departure;
+  final String destination;
+
+  LocationLabels({required this.departure, required this.destination});
+
+  @override
+  Widget build(BuildContext context) {
+    return RichText(
+      text: TextSpan(
+        text: departure + '\n',
+        style: robotoRegular.copyWith(
+            fontSize: AppConstants.fontSizeDefault, color: Colors.black),
+        children: [
+          WidgetSpan(
+            child: Icon(
+              Icons.arrow_downward_sharp,
+              size: 16,
+            ),
+          ),
+          TextSpan(
+            text: '\n' + destination + '\n',
+            style:
+                robotoRegular.copyWith(fontSize: AppConstants.fontSizeDefault),
+          ),
+        ],
+      ),
+    );
+  }
+}

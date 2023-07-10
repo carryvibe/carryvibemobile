@@ -1,4 +1,6 @@
-import 'package:carryvibemobile/mvvm/ads/ads_view.dart';
+import 'package:carryvibemobile/mvvm/home/ads/ads_view.dart';
+import 'package:carryvibemobile/mvvm/home/deliveries/deliveries_view.dart';
+import 'package:carryvibemobile/mvvm/home/publish/publish_view.dart';
 import 'package:carryvibemobile/util/app_constants.dart';
 import 'package:flutter/material.dart';
 
@@ -20,8 +22,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   final List<Widget> _screens = [
     AdsView(),
-    Center(child: Text('Yayınlarım')),
-    Center(child: Text('Yolculuklarım')),
+    PublishScreen(),
+    DeliveriesView(),
     Center(child: Text('Gelen Kutusu')),
     Center(child: Text('Profil'))
   ];
@@ -55,7 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.directions_car),
-            label: 'Yolculuklarım',
+            label: 'Teslimatlar ',
             backgroundColor: appColor,
           ),
           BottomNavigationBarItem(
