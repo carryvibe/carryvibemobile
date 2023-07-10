@@ -56,7 +56,6 @@ class _PublishScreenState extends State<PublishScreen>
   @override
   Widget build(BuildContext context) {
     return CustomListView(children: [
-      SizedBox(height: 8),
       SegmentedButton<AdsStatus>(
         segments: const [
           ButtonSegment<AdsStatus>(

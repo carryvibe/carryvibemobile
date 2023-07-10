@@ -27,9 +27,7 @@ class _DeliveriesScreenState extends State<DeliveriesScreen>
 
   @override
   Widget build(BuildContext context) {
-    return CustomListView(children: [
-      constraint,
-      CustomSecondLabel(text: "Teslimatlarım"),
+    return const CustomListView(constraint: false, children: [
       CustomAds(
           date: "25 Haziran Pazar, 22:00",
           departure: "Küçükçekmece, İstanbul",

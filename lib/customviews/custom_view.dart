@@ -29,9 +29,10 @@ class CustomView extends StatelessWidget {
 
 class CustomListView extends StatelessWidget {
   final List<Widget> children;
-
+  final bool constraint;
   const CustomListView({
     required this.children,
+    this.constraint = true,
   });
 
   @override
@@ -44,7 +45,9 @@ class CustomListView extends StatelessWidget {
     return Container(
         height: usableScreenHeight,
         child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: constraintDouble),
+            padding: EdgeInsets.symmetric(
+                horizontal: constraint ? constraintDouble : 0,
+                vertical: constraint ? constraintDouble : 0),
             child: ListView(children: children)));
   }
 }

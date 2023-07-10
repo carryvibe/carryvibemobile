@@ -53,8 +53,7 @@ class _AdsScreenState extends State<AdsScreen>
 
   @override
   Widget build(BuildContext context) {
-    return CustomListView(children: [
-      SizedBox(height: 8),
+    return CustomListView(constraint: false, children: [
       SegmentedButton<AdsStatus>(
         segments: const [
           ButtonSegment<AdsStatus>(
