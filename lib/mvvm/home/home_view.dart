@@ -1,5 +1,6 @@
 import 'package:carryvibemobile/mvvm/home/ads/ads_view.dart';
 import 'package:carryvibemobile/mvvm/home/deliveries/deliveries_view.dart';
+import 'package:carryvibemobile/mvvm/home/inbox/inbox_view.dart';
 import 'package:carryvibemobile/mvvm/home/publish/publish_view.dart';
 import 'package:carryvibemobile/util/app_constants.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
     AdsView(),
     PublishScreen(),
     DeliveriesView(),
-    Center(child: Text('Gelen Kutusu')),
+    InboxScreen(),
     Center(child: Text('Profil'))
   ];
 
