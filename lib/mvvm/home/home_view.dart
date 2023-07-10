@@ -1,9 +1,13 @@
 import 'package:carryvibemobile/mvvm/home/ads/ads_view.dart';
 import 'package:carryvibemobile/mvvm/home/deliveries/deliveries_view.dart';
+import 'package:carryvibemobile/mvvm/home/home_model.dart';
 import 'package:carryvibemobile/mvvm/home/inbox/inbox_view.dart';
+import 'package:carryvibemobile/mvvm/home/profil/profil_view.dart';
 import 'package:carryvibemobile/mvvm/home/publish/publish_view.dart';
 import 'package:carryvibemobile/util/app_constants.dart';
+import 'package:carryvibemobile/util/app_icon.dart';
 import 'package:flutter/material.dart';
+import 'package:getwidget/getwidget.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -20,22 +24,47 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
-
-  final List<Widget> _screens = [
-    AdsView(),
-    PublishScreen(),
-    DeliveriesView(),
-    InboxScreen(),
-    Center(child: Text('Profil'))
+  final List<BottomBarModel> model = [
+    BottomBarModel(title: "İlanlar", icon: Icon(Icons.search), view: AdsView()),
+    BottomBarModel(
+        title: "Yayınla",
+        icon: Icon(Icons.add_circle_outline),
+        view: PublishScreen()),
+    BottomBarModel(
+        title: "Teslimatlar",
+        icon: Icon(Icons.directions_car),
+        view: DeliveriesView()),
+    BottomBarModel(
+        title: "Gelen Kutusu", icon: Icon(Icons.message), view: InboxView()),
+    BottomBarModel(
+        title: "Profil", icon: Icon(Icons.person), view: ProfilView()),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('CarryVibe'),
+      appBar: GFAppBar(
+        leading: GFIconButton(
+          icon: AppIcon(
+            assest: IconAssest.deliveryManMarker,
+          ),
+          color: Colors.white,
+          onPressed: () {},
+          type: GFButtonType.transparent,
+        ),
+        title: Text(model[_currentIndex].title),
+        actions: <Widget>[
+          GFIconButton(
+            icon: Icon(
+              Icons.person,
+              color: Colors.white,
+            ),
+            onPressed: () {},
+            type: GFButtonType.transparent,
+          ),
+        ],
       ),
-      body: _screens[_currentIndex],
+      body: model[_currentIndex].view,
       bottomNavigationBar: BottomNavigationBar(
         showUnselectedLabels: true,
         backgroundColor: appColor,
@@ -46,31 +75,12 @@ class _HomeScreenState extends State<HomeScreen> {
           });
         },
         items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: 'İlanlar',
-            backgroundColor: appColor,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.add_circle_outline),
-            label: 'Yayınla',
-            backgroundColor: appColor,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.directions_car),
-            label: 'Teslimatlar ',
-            backgroundColor: appColor,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.message),
-            label: 'Gelen Kutusu',
-            backgroundColor: appColor,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profil',
-            backgroundColor: appColor,
-          ),
+          for (int i = 0; i < model.length; i++)
+            BottomNavigationBarItem(
+              icon: model[i].icon,
+              label: model[i].title,
+              backgroundColor: appColor,
+            ),
         ],
       ),
     );

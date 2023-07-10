@@ -3,13 +3,16 @@ import 'package:flutter/material.dart';
 class AppIconView extends StatelessWidget {
   final String icon;
   final double? width;
-  const AppIconView({required this.icon, required this.width});
+  final double? height;
+  const AppIconView(
+      {required this.icon, required this.width, required this.height});
 
   @override
   Widget build(BuildContext context) {
     return Image.asset(
       icon,
       width: width,
+      height: height,
     );
   }
 }
@@ -49,6 +52,7 @@ enum IconAssest {
 
 class AppIcon extends StatelessWidget {
   final double? width;
+  final double? height;
   final IconAssest assest;
 
   String getAssests() {
@@ -118,10 +122,14 @@ class AppIcon extends StatelessWidget {
     }
   }
 
-  AppIcon({required this.assest, this.width = null});
+  AppIcon({required this.assest, this.width = null, this.height = null});
 
   @override
   Widget build(BuildContext context) {
-    return AppIconView(icon: getAssests(), width: width);
+    return AppIconView(
+      icon: getAssests(),
+      width: width,
+      height: height,
+    );
   }
 }
