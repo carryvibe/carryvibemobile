@@ -1,3 +1,4 @@
+import 'package:carryvibemobile/manager/user_default_manager.dart';
 import 'package:carryvibemobile/mvvm/home/ads/ads_view.dart';
 import 'package:carryvibemobile/mvvm/home/deliveries/deliveries_view.dart';
 import 'package:carryvibemobile/mvvm/home/home_model.dart';
@@ -13,6 +14,7 @@ class HomeView extends StatelessWidget {
   const HomeView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    print(UserDefaultManager.shared().getValue("token"));
     return HomeScreen();
   }
 }

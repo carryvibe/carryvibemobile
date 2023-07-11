@@ -1,3 +1,5 @@
+import 'package:carryvibemobile/newtorklayer/service.dart';
+
 class LoginRequestModel {
   final String userName;
   final String password;
@@ -11,11 +13,15 @@ class LoginRequestModel {
 }
 
 class LoginResponseModel {
-  final String firstName;
-  final String token;
-  final String phoneNumber;
-  LoginResponseModel(
-      {required this.firstName,
-      required this.token,
-      required this.phoneNumber});
+  final String? firstName;
+  final String? token;
+  final String? phoneNumber;
+  LoginResponseModel({this.firstName, this.token, this.phoneNumber});
+
+  factory LoginResponseModel.fromJson(Map<String, dynamic> json) {
+    return LoginResponseModel(
+        firstName: json['firstName'],
+        token: json['token'],
+        phoneNumber: json['phoneNumber']);
+  }
 }

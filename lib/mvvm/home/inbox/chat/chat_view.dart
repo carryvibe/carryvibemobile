@@ -35,7 +35,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 RightChatMessage(text: "Merhabalar"),
                 RightChatMessage(
                     text:
-                        "Senin kargonu alırım amaKargocuğunuz sizemi ağitttiriiiiiii")
+                        "Senin kargonu alırım amaKaasdfrgocuğunuz sizemi ağitttiriiiiiii")
                 // Diğer mesajları buraya ekleyin
               ],
             ),

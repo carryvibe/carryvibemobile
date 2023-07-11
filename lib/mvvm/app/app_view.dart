@@ -1,6 +1,8 @@
+import 'package:carryvibemobile/manager/user_default_manager.dart';
 import 'package:carryvibemobile/mvvm/app/app_viewmodel.dart';
 import 'package:carryvibemobile/mvvm/auth/login/login_view.dart';
 import 'package:carryvibemobile/mvvm/auth/login/login_viewmodel.dart';
+import 'package:carryvibemobile/mvvm/home/home_view.dart';
 import 'package:flutter/material.dart';
 import 'package:getwidget/getwidget.dart';
 
@@ -26,8 +28,8 @@ class AppView extends StatelessWidget {
     } else if (viewModel.appVersion == AppVersion.notConnectionNetwork) {
       return Center(child: showAlert());
     } else {
-      if (false) {
-        //return HomeView();
+      if (UserDefaultManager.shared().getValue<String>("token") != null) {
+        return HomeView();
       } else {
         return LoginView(viewModel: _viewModel);
       }

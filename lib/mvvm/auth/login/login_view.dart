@@ -3,10 +3,13 @@ import 'package:carryvibemobile/customviews/custom_contract.dart';
 import 'package:carryvibemobile/customviews/custom_label.dart';
 import 'package:carryvibemobile/customviews/custom_textfield.dart';
 import 'package:carryvibemobile/customviews/custom_view.dart';
+import 'package:carryvibemobile/mvvm/auth/login/login_model.dart';
 import 'package:carryvibemobile/mvvm/auth/login/login_viewmodel.dart';
 import 'package:carryvibemobile/mvvm/auth/otp/otp_view.dart';
+import 'package:carryvibemobile/mvvm/auth/otp/otp_viewmodel.dart';
 import 'package:carryvibemobile/mvvm/auth/register/register_view.dart';
 import 'package:carryvibemobile/mvvm/auth/register/register_viewmodel.dart';
+import 'package:carryvibemobile/newtorklayer/service.dart';
 import 'package:carryvibemobile/util/app_constants.dart';
 import 'package:carryvibemobile/util/app_icon.dart';
 import 'package:flutter/material.dart';
@@ -29,20 +32,20 @@ class LoginView extends StatelessWidget {
         GFToast.showToast("Şifre Giriniz", context,
             toastPosition: GFToastPosition.BOTTOM);
       } else {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => OtpView()));
-        /*
         var login = await viewModel.login(
             LoginRequestModel(userName: email.text, password: password.text));
-        if (login?.isStatus == true) {
-          Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => OtpView()));
-        } else {
-          GFToast.showToast(
-              "Kullanıcı Adınız veya şifreniz hatalıdır tekrar deneyiniz.",
+        if (login?.isStatus == true &&
+            login != null &&
+            login.responseModel != null) {
+          final viewModel = OtpViewModel(
+              model: LoginResponseModel.fromJson(login!.responseModel!));
+          Navigator.push(
               context,
-              toastPosition: GFToastPosition.BOTTOM);
-        }*/
+              MaterialPageRoute(
+                  builder: (context) => OtpView(viewModel: viewModel)));
+        }
+        GFToast.showToast(login?.message ?? ServiceConstants.error, context,
+            toastPosition: GFToastPosition.BOTTOM);
       }
     }
 

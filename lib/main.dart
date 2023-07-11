@@ -1,7 +1,10 @@
+import 'dart:io';
 import 'package:carryvibemobile/mvvm/splash/splash_view.dart';
+import 'package:carryvibemobile/newtorklayer/service.dart';
 import 'package:flutter/material.dart';
 
 void main() {
+  HttpOverrides.global = MyHttpOverrides();
   runApp(MainApp());
 }
 

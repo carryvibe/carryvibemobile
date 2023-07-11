@@ -2,6 +2,8 @@ import 'package:carryvibemobile/customviews/custom_label.dart';
 import 'package:carryvibemobile/customviews/custom_menu.dart';
 import 'package:carryvibemobile/customviews/custom_profile.dart';
 import 'package:carryvibemobile/customviews/custom_view.dart';
+import 'package:carryvibemobile/mvvm/app/app_view.dart';
+import 'package:carryvibemobile/mvvm/app/app_viewmodel.dart';
 import 'package:carryvibemobile/util/app_constants.dart';
 import 'package:carryvibemobile/util/app_icon.dart';
 import 'package:flutter/material.dart';
@@ -21,9 +23,10 @@ class ProfilScreen extends StatefulWidget {
 }
 
 class _ProfilScreenState extends State<ProfilScreen> {
+  AppViewModel _viewModel = AppViewModel();
   @override
   Widget build(BuildContext context) {
-    return const CustomListView(constraint: false, children: [
+    return CustomListView(constraint: false, children: [
       constraint,
       CustomProfile(name: "Yunus Emre Coşkun"),
       constraint,
@@ -46,7 +49,17 @@ class _ProfilScreenState extends State<ProfilScreen> {
       CustomMenu(icon: Icon(Icons.settings), title: "Profilini Doğrula"),
       CustomMenu(icon: Icon(Icons.settings), title: "Uygulamaya Puan Ver"),
       CustomMenu(icon: Icon(Icons.settings), title: "Şart ve Koşullar"),
-      CustomMenu(icon: Icon(Icons.settings), title: "Çıkış Yap"),
+      CustomMenu(
+        icon: Icon(Icons.settings),
+        title: "Çıkış Yap",
+        onTap: () => {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (context) => AppView(viewModel: _viewModel)),
+          )
+        },
+      ),
     ]);
   }
 }

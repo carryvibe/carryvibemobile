@@ -1,7 +1,17 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'dart:io';
 
-enum ApiEnum { login }
+enum ApiEnum { login, verifyOtp, resendOtp }
+
+class MyHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
+  }
+}
 
 class ServiceConstants {
   static const String localHost = "https://localhost:7008/";
@@ -10,6 +20,10 @@ class ServiceConstants {
     switch (api) {
       case ApiEnum.login:
         return "Auth/Login";
+      case ApiEnum.verifyOtp:
+        return "Auth/VerifyOtp";
+      case ApiEnum.resendOtp:
+        return "Auth/ResendOtp";
     }
   }
 
@@ -19,12 +33,19 @@ class ServiceConstants {
 
 enum Status { success, fail, loading }
 
-class BaseResponseModel<T> {
-  bool? isStatus;
-  String? message;
-  T? responseModel;
+class BaseResponseModel {
+  final bool? isStatus;
+  final String? message;
+  final Map<String, dynamic>? responseModel;
 
-  BaseResponseModel(this.isStatus, this.message, this.responseModel);
+  const BaseResponseModel({this.isStatus, this.message, this.responseModel});
+
+  factory BaseResponseModel.fromJson(Map<String, dynamic> json) {
+    return BaseResponseModel(
+        isStatus: json['isStatus'],
+        message: json['message'],
+        responseModel: json['responseModel'] as Map<String, dynamic>?);
+  }
 }
 
 class Service {
@@ -36,38 +57,45 @@ class Service {
 
   static const String url = ServiceConstants.localHost;
 
-  Future<void> request<U>(
-    String? api, {
-    Map<String, String>? queryItems,
-    Map<String, dynamic>? requestModel,
-    required Function(BaseResponseModel<U>) completion,
-  }) async {
+  Future<BaseResponseModel> request<U>(String? api,
+      {Map<String, String>? queryItems,
+      Map<String, dynamic>? requestModel}) async {
     var uri = Uri.parse(url + (api ?? ""));
     if (queryItems == null) queryItems = Map<String, String>();
+    queryItems.addAll({
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    });
     //queryItems?.addAll({'apiKey': 'a0c8873b'});
-    //uri = uri.replace(queryParameters: queryItems);
-    final request = http.Request(
-      requestModel != null ? "POST" : "GET",
-      uri,
-    );
+    uri = uri.replace(queryParameters: queryItems);
+    Map<String, String> requestHeaders = {
+      'Content-type': 'application/json; charset=UTF-8',
+      'Accept': 'application/json',
+    };
 
-    if (requestModel != null) {
-      request.body = jsonEncode(requestModel);
-    }
     try {
-      final response = await request.send();
-      final responseJson = await response.stream.bytesToString();
-      final parsedResponse = jsonDecode(responseJson);
+      final response = (requestModel != null)
+          ? await http.post(
+              uri,
+              headers: requestHeaders,
+              body: jsonEncode(requestModel),
+            )
+          : await http.get(
+              uri,
+              headers: requestHeaders,
+            );
+      ;
+      final parsedResponse = jsonDecode(response.body);
 
       if (response.statusCode == 200) {
-        final model = parsedResponse as BaseResponseModel<U>;
-        completion(model);
-        return;
+        final model = BaseResponseModel.fromJson(parsedResponse);
+        return model;
       }
     } catch (e) {
       print("WEB SERVICE ERROR LOG: $e");
     }
 
-    completion(BaseResponseModel(false, ServiceConstants.error, null));
+    return (BaseResponseModel(
+        isStatus: false, message: ServiceConstants.error, responseModel: null));
   }
 }

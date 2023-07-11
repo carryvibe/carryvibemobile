@@ -2,15 +2,23 @@ import 'package:carryvibemobile/customviews/custom_button.dart';
 import 'package:carryvibemobile/customviews/custom_label.dart';
 import 'package:carryvibemobile/customviews/custom_textfield.dart';
 import 'package:carryvibemobile/customviews/custom_view.dart';
+import 'package:carryvibemobile/mvvm/auth/otp/otp_viewmodel.dart';
 import 'package:carryvibemobile/mvvm/home/home_view.dart';
+import 'package:carryvibemobile/newtorklayer/service.dart';
 import 'package:flutter/material.dart';
+import 'package:getwidget/getwidget.dart';
 
 class OtpView extends StatefulWidget {
+  final OtpViewModel viewModel;
+  const OtpView({required this.viewModel});
   @override
-  OtpViewState createState() => OtpViewState();
+  OtpViewState createState() => OtpViewState(viewModel: viewModel);
 }
 
 class OtpViewState extends State<OtpView> {
+  final OtpViewModel viewModel;
+
+  OtpViewState({required this.viewModel});
   final List<FocusNode> _focusNodes = List.generate(6, (index) => FocusNode());
   final List<TextEditingController> _controllers =
       List.generate(6, (index) => TextEditingController());
@@ -26,6 +34,22 @@ class OtpViewState extends State<OtpView> {
 
   @override
   Widget build(BuildContext context) {
+    void verifyOtp() async {
+      var value = "";
+      _controllers.forEach((element) {
+        value += element.text;
+      });
+      final model = await viewModel.verifyOtp(value);
+      if (model.isStatus ?? false) {
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => HomeView()),
+            (route) => false);
+      }
+      GFToast.showToast(model?.message ?? ServiceConstants.error, context,
+          toastPosition: GFToastPosition.BOTTOM);
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text('OTP Screen'),
@@ -33,7 +57,9 @@ class OtpViewState extends State<OtpView> {
       body: CustomView(
         children: [
           CustomLabel(text: 'SMS Doğrulama'),
-          CustomSubLabel(text: 'Telefonuna gelen doğrulama kodunu gir.'),
+          CustomSubLabel(
+              text: viewModel.phoneNumber() +
+                  ' Nolu Telefonuna gelen doğrulama kodunu gir.'),
           SizedBox(height: 16.0),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -45,10 +71,7 @@ class OtpViewState extends State<OtpView> {
           PrimaryButton(
               text: "Doğrula",
               onPressed: () {
-                Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(builder: (context) => HomeView()),
-                    (route) => false);
+                verifyOtp();
               })
         ],
       ),

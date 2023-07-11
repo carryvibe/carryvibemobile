@@ -5,7 +5,9 @@ import 'package:getwidget/getwidget.dart';
 class CustomMenu extends StatelessWidget {
   final Icon icon;
   final String title;
-  const CustomMenu({Key? key, required this.icon, required this.title})
+  final Function()? onTap;
+  const CustomMenu(
+      {Key? key, required this.icon, required this.title, this.onTap = null})
       : super(key: key);
 
   @override
@@ -15,7 +17,7 @@ class CustomMenu extends StatelessWidget {
       titleText: title,
       icon: const Icon(Icons.arrow_forward),
       color: Colors.white,
-      onTap: () => {},
+      onTap: onTap,
     );
   }
 }
