@@ -1,4 +1,6 @@
+import 'dart:async';
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io';
 
@@ -49,13 +51,14 @@ class BaseResponseModel {
 }
 
 class Service {
+  var loader = false;
   static final Service _shared = Service._internal();
   factory Service.shared() {
     return _shared;
   }
   Service._internal();
 
-  static const String url = ServiceConstants.localHost;
+  String url = ServiceConstants.localHost;
 
   Future<BaseResponseModel> request<U>(String? api,
       {Map<String, String>? queryItems,
@@ -74,6 +77,7 @@ class Service {
     };
 
     try {
+      loader = true;
       final response = (requestModel != null)
           ? await http.post(
               uri,
@@ -84,15 +88,20 @@ class Service {
               uri,
               headers: requestHeaders,
             );
-      ;
       final parsedResponse = jsonDecode(response.body);
 
       if (response.statusCode == 200) {
-        final model = BaseResponseModel.fromJson(parsedResponse);
+        var model = BaseResponseModel.fromJson(parsedResponse);
+        if (model.isStatus == null) {
+          model = BaseResponseModel.fromJson(parsedResponse["result"]);
+        }
+        loader = false;
+
         return model;
       }
     } catch (e) {
       print("WEB SERVICE ERROR LOG: $e");
+      loader = false;
     }
 
     return (BaseResponseModel(

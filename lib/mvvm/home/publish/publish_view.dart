@@ -4,6 +4,7 @@ import 'package:carryvibemobile/customviews/custom_view.dart';
 import 'package:carryvibemobile/mvvm/home/ads/ads_model.dart';
 import 'package:carryvibemobile/mvvm/home/publish/carrier_publish/carrier_publish_view.dart';
 import 'package:carryvibemobile/mvvm/home/publish/sender_publish/sender_publish_view.dart';
+import 'package:carryvibemobile/newtorklayer/service.dart';
 import 'package:flutter/material.dart';
 import 'package:getwidget/getwidget.dart';
 
@@ -55,7 +56,7 @@ class _PublishScreenState extends State<PublishScreen>
 
   @override
   Widget build(BuildContext context) {
-    return CustomListView(children: [
+    return CustomListView(service: Service.shared(), children: [
       SegmentedButton<AdsStatus>(
         segments: const [
           ButtonSegment<AdsStatus>(

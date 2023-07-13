@@ -24,8 +24,11 @@ class AppConstants {
   static const int messageInputLength = 250;
 }
 
-const constraint = SizedBox(height: constraintDouble);
-const constraintDouble = 16.0;
+const constraint = SizedBox(height: bigValue);
+
+const constraintSmall = SizedBox(height: smallValue);
+const bigValue = 16.0;
+const smallValue = 8.0;
 
 const appColor = Color.fromRGBO(1, 146, 139, 1);
 

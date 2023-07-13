@@ -5,6 +5,7 @@ import 'package:carryvibemobile/customviews/custom_textfield.dart';
 import 'package:carryvibemobile/customviews/custom_view.dart';
 import 'package:carryvibemobile/mvvm/auth/login/login_model.dart';
 import 'package:carryvibemobile/mvvm/auth/register/register_viewmodel.dart';
+import 'package:carryvibemobile/newtorklayer/service.dart';
 import 'package:carryvibemobile/util/app_constants.dart';
 import 'package:carryvibemobile/util/app_icon.dart';
 import 'package:flutter/material.dart';
@@ -23,52 +24,52 @@ class RegisterView extends StatelessWidget {
         appBar: AppBar(
           title: Text("KAYIT OL"),
         ),
-        body: CustomView(
+        body: CustomListView(
+          service: viewModel.service,
           children: [
             AppIcon(
               assest: IconAssest.logo,
-              width: 200,
+              width: 50,
+              height: 50,
             ),
-            CustomLabel(text: "KAYIT OL"),
-            constraint,
             CustomTextField(
               controller: email,
               labelText: "Ad",
               obscureText: true,
             ),
-            constraint,
+            constraintSmall,
             CustomTextField(
               controller: email,
               labelText: "Soyad",
               obscureText: true,
             ),
-            constraint,
+            constraintSmall,
             CustomTextField(
               controller: email,
               labelText: "Email",
               obscureText: true,
             ),
-            constraint,
+            constraintSmall,
             CustomTextField(
               controller: email,
               labelText: "Telefon",
               obscureText: true,
             ),
-            constraint,
+            constraintSmall,
             CustomTextField(
               controller: password,
               labelText: "Şifre",
               obscureText: true,
             ),
-            constraint,
+            constraintSmall,
             CustomTextField(
               controller: password,
               labelText: "Şifre Tekrar",
               obscureText: true,
             ),
-            constraint,
+            constraintSmall,
             PrimaryButton(text: "KAYIT OL", onPressed: () {}),
-            constraint,
+            constraintSmall,
             CustomContract(
                 text: "Üyelik sözleşmesini okudum ve",
                 textButton: "onaylıyorum.",

@@ -18,10 +18,10 @@ class LoginResponseModel {
   final String? phoneNumber;
   LoginResponseModel({this.firstName, this.token, this.phoneNumber});
 
-  factory LoginResponseModel.fromJson(Map<String, dynamic> json) {
+  factory LoginResponseModel.fromJson(Map<String, dynamic>? json) {
     return LoginResponseModel(
-        firstName: json['firstName'],
-        token: json['token'],
-        phoneNumber: json['phoneNumber']);
+        firstName: json?['firstName'],
+        token: json?['token'],
+        phoneNumber: json?['phoneNumber']);
   }
 }

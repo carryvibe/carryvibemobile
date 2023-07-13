@@ -48,6 +48,8 @@ class OtpTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GFTextField(
+      maxLines: 1,
+      fieldEnabled: false,
       controller: controller,
       focusNode: focusNode,
       textAlign: TextAlign.center,

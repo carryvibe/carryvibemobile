@@ -15,12 +15,19 @@ import 'package:carryvibemobile/util/app_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:getwidget/getwidget.dart';
 
-class LoginView extends StatelessWidget {
+class LoginView extends StatefulWidget {
+  final LoginViewModel viewModel;
+  const LoginView({required this.viewModel});
+  @override
+  LoginViewState createState() => LoginViewState(viewModel: viewModel);
+}
+
+class LoginViewState extends State<LoginView> {
   final LoginViewModel viewModel;
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
 
-  LoginView({required this.viewModel});
+  LoginViewState({required this.viewModel});
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +45,8 @@ class LoginView extends StatelessWidget {
             login != null &&
             login.responseModel != null) {
           final viewModel = OtpViewModel(
-              model: LoginResponseModel.fromJson(login!.responseModel!));
+              model: LoginResponseModel.fromJson(login!.responseModel!),
+              service: Service.shared());
           Navigator.push(
               context,
               MaterialPageRoute(
@@ -49,7 +57,9 @@ class LoginView extends StatelessWidget {
       }
     }
 
-    return CustomView(
+    return Scaffold(
+        body: CustomListView(
+      service: viewModel.service,
       children: [
         AppIcon(
           assest: IconAssest.logo,
@@ -83,7 +93,8 @@ class LoginView extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                       builder: (context) => RegisterView(
-                            viewModel: RegisterViewModel(),
+                            viewModel:
+                                RegisterViewModel(service: Service.shared()),
                           )));
             }),
         constraint,
@@ -96,6 +107,6 @@ class LoginView extends StatelessWidget {
             textButton: "Aydınlatma Metni",
             onPressed: () {})
       ],
-    );
+    ));
   }
 }

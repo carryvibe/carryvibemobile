@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:carryvibemobile/customviews/custom_view.dart';
 import 'package:carryvibemobile/mvvm/splash/splash_view.dart';
 import 'package:carryvibemobile/newtorklayer/service.dart';
 import 'package:flutter/material.dart';
@@ -26,10 +27,14 @@ class MainApp extends StatelessWidget {
       900: Color(0xFF008B78),
     });
 
-    return MaterialApp(
-      title: 'CarryVibe',
-      theme: ThemeData(primarySwatch: primaryColor),
-      home: SplashScreen(),
-    );
+    return GestureDetector(
+        onTap: () {
+          Keyboard.shared().unfocus(context);
+        },
+        child: MaterialApp(
+          title: 'CarryVibe',
+          theme: ThemeData(primarySwatch: primaryColor),
+          home: SplashScreen(),
+        ));
   }
 }

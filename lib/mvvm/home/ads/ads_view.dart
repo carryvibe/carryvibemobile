@@ -2,6 +2,7 @@ import 'package:carryvibemobile/customviews/custom_button.dart';
 import 'package:carryvibemobile/customviews/custom_textfield.dart';
 import 'package:carryvibemobile/customviews/custom_view.dart';
 import 'package:carryvibemobile/mvvm/home/ads/ads_model.dart';
+import 'package:carryvibemobile/newtorklayer/service.dart';
 import 'package:flutter/material.dart';
 import 'package:getwidget/getwidget.dart';
 
@@ -53,7 +54,7 @@ class _AdsScreenState extends State<AdsScreen>
 
   @override
   Widget build(BuildContext context) {
-    return CustomListView(children: [
+    return CustomListView(service: Service.shared(), children: [
       SegmentedButton<AdsStatus>(
         segments: const [
           ButtonSegment<AdsStatus>(

@@ -3,6 +3,7 @@ import 'package:carryvibemobile/mvvm/app/app_viewmodel.dart';
 import 'package:carryvibemobile/mvvm/auth/login/login_view.dart';
 import 'package:carryvibemobile/mvvm/auth/login/login_viewmodel.dart';
 import 'package:carryvibemobile/mvvm/home/home_view.dart';
+import 'package:carryvibemobile/newtorklayer/service.dart';
 import 'package:flutter/material.dart';
 import 'package:getwidget/getwidget.dart';
 
@@ -15,7 +16,7 @@ class AppView extends StatelessWidget {
   Widget build(BuildContext context) {
     String title = "";
     String subTitle = "";
-    final LoginViewModel _viewModel = LoginViewModel();
+    final LoginViewModel _viewModel = LoginViewModel(service: Service.shared());
     if (viewModel.appVersion == AppVersion.forceUpdate) {
       title = "Güncelleme Gerekli";
       subTitle = "Devam etmek için uygulamanın son sürümünü güncelleyin.";

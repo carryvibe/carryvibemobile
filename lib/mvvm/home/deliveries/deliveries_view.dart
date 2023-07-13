@@ -2,6 +2,7 @@ import 'package:carryvibemobile/customviews/custom_ads.dart';
 import 'package:carryvibemobile/customviews/custom_label.dart';
 import 'package:carryvibemobile/customviews/custom_view.dart';
 import 'package:carryvibemobile/mvvm/home/ads/ads_model.dart';
+import 'package:carryvibemobile/newtorklayer/service.dart';
 import 'package:carryvibemobile/util/app_constants.dart';
 import 'package:flutter/material.dart';
 
@@ -27,21 +28,24 @@ class _DeliveriesScreenState extends State<DeliveriesScreen>
 
   @override
   Widget build(BuildContext context) {
-    return const CustomListView(constraint: false, children: [
-      CustomAds(
-          date: "25 Haziran Pazar, 22:00",
-          departure: "Küçükçekmece, İstanbul",
-          destination: "Ümraniye, İstanbul",
-          name: "Yunus Emre",
-          avatar:
-              "https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/female/68.png"),
-      CustomAds(
-          date: "25 Haziran Pazar, 22:00",
-          departure: "Küçükçekmece, İstanbul",
-          destination: "Ümraniye, İstanbul",
-          name: "Yunus Emre",
-          avatar:
-              "https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/female/68.png"),
-    ]);
+    return CustomListView(
+        service: Service.shared(),
+        constraint: false,
+        children: [
+          CustomAds(
+              date: "25 Haziran Pazar, 22:00",
+              departure: "Küçükçekmece, İstanbul",
+              destination: "Ümraniye, İstanbul",
+              name: "Yunus Emre",
+              avatar:
+                  "https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/female/68.png"),
+          CustomAds(
+              date: "25 Haziran Pazar, 22:00",
+              departure: "Küçükçekmece, İstanbul",
+              destination: "Ümraniye, İstanbul",
+              name: "Yunus Emre",
+              avatar:
+                  "https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/female/68.png"),
+        ]);
   }
 }

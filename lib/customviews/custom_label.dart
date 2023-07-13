@@ -5,7 +5,12 @@ import 'package:getwidget/getwidget.dart';
 class CustomLabel extends StatelessWidget {
   final String text;
   final TextStyle? textStyle;
-  const CustomLabel({Key? key, required this.text, this.textStyle = null})
+  final TextAlign align;
+  const CustomLabel(
+      {Key? key,
+      required this.text,
+      this.textStyle = null,
+      this.align = TextAlign.center})
       : super(key: key);
 
   @override
@@ -14,6 +19,7 @@ class CustomLabel extends StatelessWidget {
       text,
       style: textStyle ??
           robotoBlack.copyWith(fontSize: AppConstants.fontSizeOverLarge),
+      textAlign: align,
     );
   }
 }
@@ -43,7 +49,12 @@ class CustomSecondLabel extends StatelessWidget {
 class CustomSubLabel extends StatelessWidget {
   final String text;
   final TextStyle? textStyle;
-  const CustomSubLabel({Key? key, required this.text, this.textStyle = null})
+  final TextAlign align;
+  const CustomSubLabel(
+      {Key? key,
+      required this.text,
+      this.textStyle = null,
+      this.align = TextAlign.center})
       : super(key: key);
 
   @override
@@ -52,6 +63,7 @@ class CustomSubLabel extends StatelessWidget {
       text,
       style: textStyle ??
           robotoRegular.copyWith(fontSize: AppConstants.fontSizeLarge),
+      textAlign: align,
     );
   }
 }

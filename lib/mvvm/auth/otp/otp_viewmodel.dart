@@ -13,19 +13,29 @@ mixin OtpViewModelDelegate {
 class OtpViewModel extends ChangeNotifier {
   LoginResponseModel model;
   OtpViewModelDelegate? delegate;
-  OtpViewModel({required this.model});
-
+  Service service;
+  OtpViewModel({required this.model, required this.service});
   String phoneNumber() {
     return model.phoneNumber ?? "";
   }
 
   Future<BaseResponseModel> verifyOtp(String otp) async {
-    final responseModel = await Service.shared().request(
+    final responseModel = await service.request(
         ServiceConstants.api(ApiEnum.verifyOtp),
         requestModel:
             OtpRequestModel(otp: otp, token: model.token ?? "").toJson());
     if (responseModel.isStatus ?? false) {
       UserDefaultManager.shared().setValue("token", model.token);
+    }
+    return responseModel;
+  }
+
+  Future<BaseResponseModel> resendOtp() async {
+    final responseModel = await service.request(
+        ServiceConstants.api(ApiEnum.resendOtp),
+        requestModel: <String, dynamic>{"token": model.token});
+    if (responseModel.isStatus ?? false) {
+      model = LoginResponseModel.fromJson(responseModel.responseModel);
     }
     return responseModel;
   }

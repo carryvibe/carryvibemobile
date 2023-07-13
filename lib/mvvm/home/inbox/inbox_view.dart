@@ -1,8 +1,8 @@
 import 'package:carryvibemobile/customviews/custom_inbox.dart';
 import 'package:carryvibemobile/customviews/custom_view.dart';
 import 'package:carryvibemobile/mvvm/home/inbox/chat/chat_view.dart';
+import 'package:carryvibemobile/newtorklayer/service.dart';
 import 'package:flutter/material.dart';
-import 'package:getwidget/getwidget.dart';
 
 class InboxView extends StatelessWidget {
   const InboxView({Key? key}) : super(key: key);
@@ -20,7 +20,7 @@ class InboxScreen extends StatefulWidget {
 class _InboxScreenState extends State<InboxScreen> {
   @override
   Widget build(BuildContext context) {
-    return CustomListView(children: [
+    return CustomListView(service: Service.shared(), children: [
       CustomInbox(
         date: "Paz 25 Haziran, 23:10",
         departure: "Küçükçekmece",
