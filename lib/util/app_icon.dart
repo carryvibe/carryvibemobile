@@ -48,6 +48,7 @@ enum IconAssest {
   image,
   send,
   notificationPlaceholder,
+  marker
 }
 
 class AppIcon extends StatelessWidget {
@@ -119,6 +120,8 @@ class AppIcon extends StatelessWidget {
         return 'assets/image/send.png';
       case IconAssest.notificationPlaceholder:
         return 'assets/image/notification_placeholder.jpg';
+      case IconAssest.marker:
+        return 'assets/image/marker.png';
     }
   }
 

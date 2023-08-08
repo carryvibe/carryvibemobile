@@ -1,9 +1,7 @@
 import 'package:carryvibemobile/customviews/custom_ads.dart';
-import 'package:carryvibemobile/customviews/custom_label.dart';
 import 'package:carryvibemobile/customviews/custom_view.dart';
-import 'package:carryvibemobile/mvvm/home/ads/ads_model.dart';
 import 'package:carryvibemobile/newtorklayer/service.dart';
-import 'package:carryvibemobile/util/app_constants.dart';
+import 'package:carryvibemobile/util/enums.dart';
 import 'package:flutter/material.dart';
 
 class DeliveriesView extends StatelessWidget {
@@ -33,6 +31,7 @@ class _DeliveriesScreenState extends State<DeliveriesScreen>
         constraint: false,
         children: [
           CustomAds(
+              image: "",
               date: "25 Haziran Pazar, 22:00",
               departure: "Küçükçekmece, İstanbul",
               destination: "Ümraniye, İstanbul",
@@ -40,6 +39,7 @@ class _DeliveriesScreenState extends State<DeliveriesScreen>
               avatar:
                   "https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/female/68.png"),
           CustomAds(
+              image: "",
               date: "25 Haziran Pazar, 22:00",
               departure: "Küçükçekmece, İstanbul",
               destination: "Ümraniye, İstanbul",

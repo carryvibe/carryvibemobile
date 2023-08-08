@@ -1,3 +1,4 @@
+import 'package:carryvibemobile/manager/user_default_manager.dart';
 import 'package:carryvibemobile/mvvm/app/app_model.dart';
 import 'package:carryvibemobile/newtorklayer/newtork_connectivity.dart';
 import 'package:flutter/widgets.dart';
@@ -11,6 +12,7 @@ class AppViewModel extends ChangeNotifier {
   AppViewModelDelegate? delegate;
   AppModel? _appModel;
   AppVersion appVersion = AppVersion.undefield;
+  String? token;
   AppViewModel() {
     init();
   }
@@ -20,7 +22,7 @@ class AppViewModel extends ChangeNotifier {
         forceVersion: forceVersion, suggestionVersion: suggestionVersion);
   }
 
-  void getAppModel() {
+  void getAppModel() async {
     AppModel? appModel = AppModel(
         forceVersion: "1.0", suggestionVersion: "1.0"); // servis çağırılacak
     if (appModel.forceVersion.compareTo("1.0") > 0) {
@@ -28,7 +30,11 @@ class AppViewModel extends ChangeNotifier {
     } else if (appModel.suggestionVersion.compareTo("1.0") > 0) {
       this.appVersion = AppVersion.suggestionUpdate;
     } else {
-      this.appVersion = AppVersion.done;
+      String? token = await UserDefaultManager.shared().getValue("token") ?? "";
+      if (token != null) {
+        this.appVersion = AppVersion.done;
+        this.token = token;
+      }
     }
     this._appModel = appModel;
     notifyListeners();

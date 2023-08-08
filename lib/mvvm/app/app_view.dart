@@ -29,10 +29,12 @@ class AppView extends StatelessWidget {
     } else if (viewModel.appVersion == AppVersion.notConnectionNetwork) {
       return Center(child: showAlert());
     } else {
-      if (UserDefaultManager.shared().getValue<String>("token") != null) {
-        return HomeView();
-      } else {
+      if (viewModel.token == null || viewModel.token == "") {
         return LoginView(viewModel: _viewModel);
+      } else {
+        return HomeView(
+          service: _viewModel.service,
+        );
       }
     }
     return Scaffold(

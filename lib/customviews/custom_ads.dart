@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:carryvibemobile/customviews/custom_label.dart';
 import 'package:carryvibemobile/util/app_constants.dart';
 import 'package:carryvibemobile/util/app_icon.dart';
@@ -5,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:getwidget/getwidget.dart';
 
 class CustomAds extends StatelessWidget {
+  final String image;
   final String date;
   final String departure;
   final String destination;
@@ -12,6 +15,7 @@ class CustomAds extends StatelessWidget {
   final String name;
   const CustomAds(
       {Key? key,
+      required this.image,
       required this.date,
       required this.departure,
       required this.destination,
@@ -22,10 +26,15 @@ class CustomAds extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GFListTile(
-        avatar: AppIcon(
-          assest: IconAssest.money,
-          width: 32,
-        ),
+        avatar: image != ""
+            ? Image.memory(
+                base64Decode(image),
+                width: 40,
+              )
+            : AppIcon(
+                assest: IconAssest.logo,
+                width: 40,
+              ),
         title: CustomSecondLabel(text: date),
         subTitle:
             LocationLabels(departure: departure, destination: destination),

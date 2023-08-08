@@ -47,5 +47,13 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>This app needs access to location when open.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>This app needs access to location when in the background.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+    <string>Uygulama fotoğraflara erişmek için izin istiyor.</string>
+	<key>NSCameraUsageDescription</key>
+    <string>Uygulama kameraya erişmek için izin istiyor.</string>
 </dict>
 </plist>

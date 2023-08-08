@@ -2,6 +2,7 @@ import 'package:carryvibemobile/customviews/custom_label.dart';
 import 'package:carryvibemobile/customviews/custom_menu.dart';
 import 'package:carryvibemobile/customviews/custom_profile.dart';
 import 'package:carryvibemobile/customviews/custom_view.dart';
+import 'package:carryvibemobile/manager/user_default_manager.dart';
 import 'package:carryvibemobile/mvvm/app/app_view.dart';
 import 'package:carryvibemobile/mvvm/app/app_viewmodel.dart';
 import 'package:carryvibemobile/newtorklayer/service.dart';
@@ -56,14 +57,16 @@ class _ProfilScreenState extends State<ProfilScreen> {
           CustomMenu(
             icon: Icon(Icons.settings),
             title: "Çıkış Yap",
-            onTap: () => {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => AppView(viewModel: _viewModel)),
-              )
-            },
+            onTap: () => {logout()},
           ),
         ]);
+  }
+
+  void logout() async {
+    await UserDefaultManager.shared().removeValue("token");
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => AppView(viewModel: _viewModel)),
+    );
   }
 }

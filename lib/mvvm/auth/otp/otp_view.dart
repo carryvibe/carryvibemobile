@@ -93,7 +93,10 @@ class OtpViewState extends State<OtpView> {
       if (model.isStatus ?? false) {
         Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(builder: (context) => HomeView()),
+            MaterialPageRoute(
+                builder: (context) => HomeView(
+                      service: viewModel.service,
+                    )),
             (route) => false);
       }
       GFToast.showToast(model?.message ?? ServiceConstants.error, context,

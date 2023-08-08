@@ -3,6 +3,7 @@ import 'package:carryvibemobile/customviews/custom_view.dart';
 import 'package:carryvibemobile/mvvm/splash/splash_view.dart';
 import 'package:carryvibemobile/newtorklayer/service.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() {
   HttpOverrides.global = MyHttpOverrides();
@@ -32,6 +33,11 @@ class MainApp extends StatelessWidget {
           Keyboard.shared().unfocus(context);
         },
         child: MaterialApp(
+          localizationsDelegates: const [
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+          ],
+          supportedLocales: [const Locale('tr')],
           title: 'CarryVibe',
           theme: ThemeData(primarySwatch: primaryColor),
           home: SplashScreen(),

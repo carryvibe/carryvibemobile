@@ -6,12 +6,20 @@ version: 0.1.0
 environment:
   sdk: '>=3.0.5 <4.0.0'
 
+
 dependencies:
   connectivity_plus: ^4.0.1
   flutter:
     sdk: flutter
+  flutter_image_compress: ^2.0.4
+  flutter_localization: ^0.1.13
+  geocoding: ^2.1.0
+  geolocator: ^9.0.2
   getwidget: ^3.1.1
+  google_maps_flutter: ^2.3.1
   http: ^1.1.0
+  image: ^4.0.17
+  image_picker: ^1.0.2
   shared_preferences: ^2.2.0
 
 dev_dependencies:

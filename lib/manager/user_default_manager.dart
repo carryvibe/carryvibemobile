@@ -5,47 +5,55 @@ class UserDefaultManager {
   factory UserDefaultManager.shared() {
     return _shared;
   }
-  UserDefaultManager() {
-    setPrefs();
-  }
-  SharedPreferences? prefs;
 
-  Future<void> setPrefs() async {
-    await SharedPreferences.getInstance();
-  }
+  UserDefaultManager();
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
-  void setValue(String key, dynamic value) async {
+  Future<void> setValue(String key, dynamic value) async {
+    SharedPreferences prefs = await _prefs;
+
     switch (value.runtimeType) {
       case int:
-        await prefs?.setInt(key, value as int);
+        await prefs.setInt(key, value);
         break;
       case bool:
-        await prefs?.setBool(key, value as bool);
+        await prefs.setBool(key, value);
         break;
       case double:
-        await prefs?.setDouble(key, value as double);
+        await prefs.setDouble(key, value);
         break;
       case String:
-        await prefs?.setString(key, value as String);
+        await prefs.setString(key, value);
         break;
-      case <String>[]:
-        await prefs?.setStringList(key, value as List<String>);
+      case [String]:
+        await prefs.setStringList(key, value);
         break;
+      default:
+        throw Exception('Invalid data type');
     }
   }
 
-  T? getValue<T>(String key) {
-    switch (T.runtimeType) {
+  Future<T?> getValue<T>(String key) async {
+    SharedPreferences prefs = await _prefs;
+
+    switch (T) {
       case int:
-        return prefs?.getInt(key) as T;
+        return prefs.getInt(key) as T?;
       case bool:
-        return prefs?.getBool(key) as T;
+        return prefs.getBool(key) as T?;
       case double:
-        return prefs?.getDouble(key) as T;
+        return prefs.getDouble(key) as T?;
       case String:
-        return prefs?.getString(key) as T;
-      case <String>[]:
-        return prefs?.getStringList(key) as T;
+        return prefs.getString(key) as T?;
+      case [String]:
+        return prefs.getStringList(key) as T?;
+      default:
+        return null;
     }
+  }
+
+  Future<void> removeValue(String key) async {
+    SharedPreferences prefs = await _prefs;
+    prefs.remove(key);
   }
 }

@@ -46,7 +46,7 @@ class LoginViewState extends State<LoginView> {
             login.responseModel != null) {
           final viewModel = OtpViewModel(
               model: LoginResponseModel.fromJson(login!.responseModel!),
-              service: Service.shared());
+              service: this.viewModel.service);
           Navigator.push(
               context,
               MaterialPageRoute(
@@ -93,8 +93,8 @@ class LoginViewState extends State<LoginView> {
                   context,
                   MaterialPageRoute(
                       builder: (context) => RegisterView(
-                            viewModel:
-                                RegisterViewModel(service: Service.shared()),
+                            viewModel: RegisterViewModel(
+                                service: this.viewModel.service),
                           )));
             }),
         constraint,

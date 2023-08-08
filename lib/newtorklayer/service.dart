@@ -1,10 +1,20 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:carryvibemobile/manager/user_default_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io';
 
-enum ApiEnum { login, verifyOtp, resendOtp }
+enum ApiEnum {
+  login,
+  verifyOtp,
+  resendOtp,
+  places,
+  postSender,
+  postCarrier,
+  searchSenderAds,
+  carrierSenderAds
+}
 
 class MyHttpOverrides extends HttpOverrides {
   @override
@@ -26,6 +36,16 @@ class ServiceConstants {
         return "Auth/VerifyOtp";
       case ApiEnum.resendOtp:
         return "Auth/ResendOtp";
+      case ApiEnum.places:
+        return "Common/GetAllPlaces";
+      case ApiEnum.postSender:
+        return "Ads/PostSender";
+      case ApiEnum.postCarrier:
+        return "Ads/PostCarrier";
+      case ApiEnum.searchSenderAds:
+        return "Ads/GetSearchSender";
+      case ApiEnum.carrierSenderAds:
+        return "Ads/GetCarrierSender";
     }
   }
 
@@ -38,7 +58,7 @@ enum Status { success, fail, loading }
 class BaseResponseModel {
   final bool? isStatus;
   final String? message;
-  final Map<String, dynamic>? responseModel;
+  final Object? responseModel;
 
   const BaseResponseModel({this.isStatus, this.message, this.responseModel});
 
@@ -46,7 +66,7 @@ class BaseResponseModel {
     return BaseResponseModel(
         isStatus: json['isStatus'],
         message: json['message'],
-        responseModel: json['responseModel'] as Map<String, dynamic>?);
+        responseModel: json['responseModel'] as Object?);
   }
 }
 
@@ -65,15 +85,12 @@ class Service {
       Map<String, dynamic>? requestModel}) async {
     var uri = Uri.parse(url + (api ?? ""));
     if (queryItems == null) queryItems = Map<String, String>();
-    queryItems.addAll({
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-    });
-    //queryItems?.addAll({'apiKey': 'a0c8873b'});
     uri = uri.replace(queryParameters: queryItems);
+    String? token = await UserDefaultManager.shared().getValue('token');
     Map<String, String> requestHeaders = {
       'Content-type': 'application/json; charset=UTF-8',
       'Accept': 'application/json',
+      if (token != null) 'token': token
     };
 
     try {
@@ -95,15 +112,15 @@ class Service {
         if (model.isStatus == null) {
           model = BaseResponseModel.fromJson(parsedResponse["result"]);
         }
-        loader = false;
 
+        loader = false;
         return model;
       }
     } catch (e) {
       print("WEB SERVICE ERROR LOG: $e");
-      loader = false;
     }
 
+    loader = false;
     return (BaseResponseModel(
         isStatus: false, message: ServiceConstants.error, responseModel: null));
   }

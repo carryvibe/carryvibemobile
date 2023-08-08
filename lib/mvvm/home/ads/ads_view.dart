@@ -1,54 +1,121 @@
 import 'package:carryvibemobile/customviews/custom_button.dart';
+import 'package:carryvibemobile/customviews/custom_history.dart';
 import 'package:carryvibemobile/customviews/custom_textfield.dart';
 import 'package:carryvibemobile/customviews/custom_view.dart';
 import 'package:carryvibemobile/mvvm/home/ads/ads_model.dart';
+import 'package:carryvibemobile/mvvm/home/ads/ads_viewmodel.dart';
+import 'package:carryvibemobile/mvvm/home/ads/carrier_ads/carrier_ads_view.dart';
+import 'package:carryvibemobile/mvvm/home/ads/search/search_model.dart';
+import 'package:carryvibemobile/mvvm/home/ads/search/search_view.dart';
+import 'package:carryvibemobile/mvvm/home/ads/search/search_viewmodel.dart';
+import 'package:carryvibemobile/mvvm/home/ads/sender_ads/sender_ads_view.dart';
 import 'package:carryvibemobile/newtorklayer/service.dart';
+import 'package:carryvibemobile/util/app_constants.dart';
+import 'package:carryvibemobile/util/enums.dart';
 import 'package:flutter/material.dart';
 import 'package:getwidget/getwidget.dart';
 
 class AdsView extends StatelessWidget {
+  AdsViewModel viewModel;
+  AdsView({required this.viewModel});
   @override
   Widget build(BuildContext context) {
-    return AdsScreen();
+    return AdsScreen(viewModel: viewModel);
   }
 }
 
 class AdsScreen extends StatefulWidget {
+  AdsViewModel viewModel;
+  AdsScreen({required this.viewModel});
   @override
-  _AdsScreenState createState() => _AdsScreenState();
+  _AdsScreenState createState() => _AdsScreenState(viewModel: viewModel);
 }
 
 class _AdsScreenState extends State<AdsScreen>
     with SingleTickerProviderStateMixin {
+  AdsViewModel viewModel;
+  _AdsScreenState({required this.viewModel});
   AdsStatus selected = AdsStatus.sender;
 
-  TextEditingController startLocation = TextEditingController();
-  TextEditingController finishLocation = TextEditingController();
-  TextEditingController date = TextEditingController();
+  TextEditingController startLocationController = TextEditingController();
+  TextEditingController finishLocationController = TextEditingController();
+  String startLocationId = "", finishLocationId = "";
+  FocusNode startFocus = FocusNode();
+  FocusNode finishFocus = FocusNode();
 
   @override
   void dispose() {
-    startLocation.dispose();
+    startLocationController.dispose();
+    finishLocationController.dispose();
     super.dispose();
   }
 
   void _openSearchScreen(
       BuildContext context, TextEditingController controller) async {
-    final result = await showModalBottomSheet(
-      context: context,
-      builder: (BuildContext context) {
-        return SearchScreen(
-          onLocationSelected: (String location) {
-            Navigator.pop(context, location);
-          },
-        );
-      },
-    );
+    var places = await viewModel.getAllPlaces();
+    if (places != null) {
+      controller == startLocationController
+          ? startFocus.unfocus()
+          : finishFocus.unfocus();
+      final result = await Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => SearchView(
+                    onLocationSelected: (Places location) {
+                      Navigator.pop(context, location);
+                    },
+                    viewModel: SearchViewModel(
+                        service: viewModel.service, places: places),
+                  ),
+              fullscreenDialog: true));
 
-    if (result != null) {
-      setState(() {
-        controller.text = result;
-      });
+      if (result != null) {
+        var resultPlace = result as Places;
+        controller == startLocationController
+            ? startLocationId = resultPlace.id
+            : finishLocationId = resultPlace.id;
+        setState(() {
+          controller.text = resultPlace.formattedAdres;
+        });
+      }
+    }
+  }
+
+  void getSearchSenderAds() async {
+    var model =
+        await viewModel.getSearchSenderAds(startLocationId, finishLocationId);
+    if (model.isStatus == true && model.responseModel != null) {
+      var response = model.responseModel as List<dynamic>;
+      var senderAdsModel =
+          response.map((data) => SenderAdsModel.fromJson(data)).toList();
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) =>
+                  SenderAdsView(senderAdsModel: senderAdsModel),
+              fullscreenDialog: true));
+    } else {
+      GFToast.showToast(model.message, context,
+          toastPosition: GFToastPosition.BOTTOM);
+    }
+  }
+
+  void getSearchCarrierAds() async {
+    var model =
+        await viewModel.getSearchCarrierAds(startLocationId, finishLocationId);
+    if (model.isStatus == true && model.responseModel != null) {
+      var response = model.responseModel as List<dynamic>;
+      var carrierAdsModel =
+          response.map((data) => CarrierAdsModel.fromJson(data)).toList();
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) =>
+                  CarrierAdsView(carrierAdsModel: carrierAdsModel),
+              fullscreenDialog: true));
+    } else {
+      GFToast.showToast(model.message, context,
+          toastPosition: GFToastPosition.BOTTOM);
     }
   }
 
@@ -73,138 +140,36 @@ class _AdsScreenState extends State<AdsScreen>
       Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          constraint,
           CustomTitleLineTextField(
-            controller: startLocation,
+            controller: startLocationController,
             title: "Nereden",
             labelText: "Başlangıç noktasını girin",
-            onTap: () => _openSearchScreen(context, startLocation),
-            onChanged: (value) {
-              setState(() {
-                startLocation.text = value;
-              });
-            },
+            onTap: () => _openSearchScreen(context, startLocationController),
+            focusNode: startFocus,
           ),
+          constraint,
           CustomTitleLineTextField(
-            controller: finishLocation,
+            controller: finishLocationController,
             title: "Nereye",
             labelText: "Varış noktasını girin",
-            onTap: () => _openSearchScreen(context, finishLocation),
-            onChanged: (value) {
-              setState(() {
-                finishLocation.text = value;
-              });
-            },
+            onTap: () => _openSearchScreen(context, finishLocationController),
+            focusNode: finishFocus,
           ),
-          CustomTitleLineTextField(
-            controller: date,
-            title: "Tarih",
-            labelText: "Yolculuk tarihini girin",
-            onTap: () => _openSearchScreen(context, date),
-            onChanged: (value) {
-              setState(() {
-                date.text = value;
-              });
-            },
-          ),
-          SizedBox(height: 24),
+          constraint,
           PrimaryButton(
-            onPressed: () {},
+            onPressed: () {
+              selected == AdsStatus.sender
+                  ? getSearchSenderAds()
+                  : getSearchCarrierAds();
+            },
             text: "Ara",
           ),
-          SizedBox(height: 16.0),
-          GFListTile(
-            avatar: GFAvatar(
-              child: Icon(Icons.history),
-              backgroundColor: Colors.white,
-            ),
-            titleText: 'İstanbul, Türkiye -> Bursa, Türkiye',
-            color: Colors.white,
-            onTap: () => {print("asdf")},
-          ),
-          GFListTile(
-            avatar: GFAvatar(
-              child: Icon(Icons.history),
-              backgroundColor: Colors.white,
-            ),
-            titleText: 'İstanbul, Türkiye -> Bursa, Türkiye',
-            color: Colors.white,
-            onTap: () => {print("asdf")},
-          ),
-          GFListTile(
-            avatar: GFAvatar(
-              child: Icon(Icons.history),
-              backgroundColor: Colors.white,
-            ),
-            titleText: 'İstanbul, Türkiye -> Bursa, Türkiye',
-            color: Colors.white,
-            onTap: () => {print("asdf")},
-          ),
-          GFListTile(
-            avatar: GFAvatar(
-              child: Icon(Icons.history),
-              backgroundColor: Colors.white,
-            ),
-            titleText: 'İstanbul, Türkiye -> Bursa, Türkiye',
-            color: Colors.white,
-            onTap: () => {print("asdf")},
-          ),
-          GFListTile(
-            avatar: GFAvatar(
-              child: Icon(Icons.history),
-              backgroundColor: Colors.white,
-            ),
-            titleText: 'İstanbul, Türkiye -> Bursa, Türkiye',
-            color: Colors.white,
-            onTap: () => {print("asdf")},
-          )
+          constraint,
+          HistoryView(
+              text: 'İstanbul, Türkiye -> Bursa, Türkiye', onPressed: () => {})
         ],
       ),
     ]);
-  }
-}
-
-class SearchScreen extends StatelessWidget {
-  final Function(String) onLocationSelected;
-
-  SearchScreen({required this.onLocationSelected});
-
-  List list = [
-    "Flutter",
-    "React",
-    "Ionic",
-    "Xamarin",
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          GFSearchBar(
-            searchList: list,
-            searchQueryBuilder: (query, list) {
-              return list
-                  .where((item) =>
-                      item.toLowerCase().contains(query.toLowerCase()))
-                  .toList();
-            },
-            overlaySearchListItemBuilder: (item) {
-              return Container(
-                padding: const EdgeInsets.all(8),
-                child: Text(
-                  item,
-                  style: const TextStyle(fontSize: 18),
-                ),
-              );
-            },
-            onItemSelected: (item) {
-              print("$item");
-              onLocationSelected("$item");
-            },
-          ),
-        ],
-      ),
-    );
   }
 }

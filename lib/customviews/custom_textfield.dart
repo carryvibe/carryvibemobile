@@ -73,6 +73,7 @@ class CustomTitleLineTextField extends StatelessWidget {
   final bool obscureText;
   ValueChanged<String>? onChanged;
   final Function()? onTap;
+  final FocusNode focusNode;
 
   CustomTitleLineTextField({
     required this.controller,
@@ -82,6 +83,7 @@ class CustomTitleLineTextField extends StatelessWidget {
     this.obscureText = false,
     this.onChanged = null,
     this.onTap = null,
+    required this.focusNode,
   });
 
   @override
@@ -98,7 +100,44 @@ class CustomTitleLineTextField extends StatelessWidget {
         ),
         onChanged: onChanged,
         onTap: onTap,
-      )
+        focusNode: focusNode,
+      ),
     ]);
+  }
+}
+
+class CustomLocationTextField extends StatelessWidget {
+  final TextEditingController controller;
+  final String labelText;
+  final IconData? prefixIcon;
+  final bool obscureText;
+  ValueChanged<String>? onChanged;
+  final Function()? onTap;
+  final FocusNode focusNode;
+
+  CustomLocationTextField({
+    required this.controller,
+    required this.labelText,
+    this.prefixIcon,
+    this.obscureText = false,
+    this.onChanged = null,
+    this.onTap = null,
+    required this.focusNode,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GFTextField(
+      controller: controller,
+      decoration: InputDecoration(
+        labelText: labelText,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
+      ),
+      onChanged: onChanged,
+      onTap: onTap,
+      focusNode: focusNode,
+    );
   }
 }
