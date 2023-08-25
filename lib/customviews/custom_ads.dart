@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:carryvibemobile/customviews/custom_label.dart';
-import 'package:carryvibemobile/util/app_constants.dart';
 import 'package:carryvibemobile/util/app_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:getwidget/getwidget.dart';

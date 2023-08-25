@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:carryvibemobile/manager/user_default_manager.dart';
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io';
 
@@ -9,11 +8,14 @@ enum ApiEnum {
   login,
   verifyOtp,
   resendOtp,
+  register,
   places,
   postSender,
   postCarrier,
   searchSenderAds,
-  carrierSenderAds
+  carrierSenderAds,
+  getContract,
+  verifyTCKN
 }
 
 class MyHttpOverrides extends HttpOverrides {
@@ -36,6 +38,8 @@ class ServiceConstants {
         return "Auth/VerifyOtp";
       case ApiEnum.resendOtp:
         return "Auth/ResendOtp";
+      case ApiEnum.register:
+        return "Auth/Register";
       case ApiEnum.places:
         return "Common/GetAllPlaces";
       case ApiEnum.postSender:
@@ -46,6 +50,10 @@ class ServiceConstants {
         return "Ads/GetSearchSender";
       case ApiEnum.carrierSenderAds:
         return "Ads/GetCarrierSender";
+      case ApiEnum.getContract:
+        return "Common/GetContract";
+      case ApiEnum.verifyTCKN:
+        return "Common/GetTCKNVerify";
     }
   }
 

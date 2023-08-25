@@ -12,6 +12,7 @@ import 'package:carryvibemobile/mvvm/auth/register/register_viewmodel.dart';
 import 'package:carryvibemobile/newtorklayer/service.dart';
 import 'package:carryvibemobile/util/app_constants.dart';
 import 'package:carryvibemobile/util/app_icon.dart';
+import 'package:carryvibemobile/util/enums.dart';
 import 'package:flutter/material.dart';
 import 'package:getwidget/getwidget.dart';
 
@@ -69,7 +70,7 @@ class LoginViewState extends State<LoginView> {
         constraint,
         CustomTextField(
           controller: email,
-          labelText: "Email",
+          labelText: "Kullanıcı Adı",
           obscureText: true,
         ),
         constraint,
@@ -79,12 +80,12 @@ class LoginViewState extends State<LoginView> {
           obscureText: true,
         ),
         constraint,
-        Row(
+        /*Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             LabelButton(text: "Şifrenizi mi Unuttunuz ?", onPressed: () {})
           ],
-        ),
+        ),*/
         PrimaryButton(text: "GİRİŞ YAP", onPressed: login),
         PrimaryButton(
             text: "KAYIT OL",
@@ -101,11 +102,13 @@ class LoginViewState extends State<LoginView> {
         CustomContract(
             text: "Çerez metnini okudum ve",
             textButton: "onaylıyorum.",
-            onPressed: () {}),
+            contract: Contract.cerez,
+            service: viewModel.service),
         CustomContract(
             text: "CarryVibe İletişim Formu ve Chatbot İşlevi",
             textButton: "Aydınlatma Metni",
-            onPressed: () {})
+            contract: Contract.iletisimFormuAydinlatmaMetni,
+            service: viewModel.service)
       ],
     ));
   }

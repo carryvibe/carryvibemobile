@@ -1,21 +1,45 @@
-import 'package:carryvibemobile/customviews/custom_button.dart';
+import 'package:carryvibemobile/newtorklayer/service.dart';
 import 'package:carryvibemobile/util/app_constants.dart';
+import 'package:carryvibemobile/util/common_service.dart';
+import 'package:carryvibemobile/util/contract_view.dart';
+import 'package:carryvibemobile/util/enums.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:getwidget/getwidget.dart';
 
 class CustomContract extends StatelessWidget {
   final String text;
   final String textButton;
-  final Function() onPressed;
+  final Contract contract;
+  final Service service;
   const CustomContract(
       {Key? key,
       required this.text,
       required this.textButton,
-      required this.onPressed})
+      required this.contract,
+      required this.service})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    void onPressed() async {
+      final model = await CommonService(service: service).getContract(contract);
+      if (model != null &&
+          model.isStatus == true &&
+          model.responseModel != null) {
+        final contractModel = ContractModel.fromJson(model.responseModel);
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    ContractView(contractModel: contractModel),
+                fullscreenDialog: true));
+      } else {
+        GFToast.showToast(model?.message ?? ServiceConstants.error, context,
+            toastPosition: GFToastPosition.BOTTOM);
+      }
+    }
+
     return RichText(
       textAlign: TextAlign.center,
       text: TextSpan(

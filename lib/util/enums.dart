@@ -5,3 +5,12 @@ enum Status { success, waiting, reject }
 enum Travel { car, bus, train, ship, motorcycle, bicycle, plane }
 
 enum AdsStatus { sender, carrier }
+
+enum Contract {
+  kvkk,
+  uyelikSozlesmesi,
+  uyelikFaaliyetleriAydinlatmaRizaMetni,
+  cerez,
+  iletisimFormuAydinlatmaMetni,
+  illegalEsyalar
+}

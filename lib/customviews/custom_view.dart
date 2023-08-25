@@ -30,6 +30,8 @@ class CustomView extends StatelessWidget {
                 if (service.loader)
                   Center(
                     child: FutureBuilder(
+                      future: Future.delayed(
+                          Duration(milliseconds: 1)), // A placeholder future
                       builder: (context, snapshot) {
                         return GFLoader(type: GFLoaderType.ios);
                       },
@@ -75,6 +77,8 @@ class CustomListView extends StatelessWidget {
                       if (service.loader)
                         Center(
                           child: FutureBuilder(
+                            future: Future.delayed(Duration(
+                                milliseconds: 1)), // A placeholder future
                             builder: (context, snapshot) {
                               return GFLoader(type: GFLoaderType.ios);
                             },

@@ -1,25 +1,61 @@
 import 'package:carryvibemobile/customviews/custom_button.dart';
 import 'package:carryvibemobile/customviews/custom_contract.dart';
-import 'package:carryvibemobile/customviews/custom_label.dart';
 import 'package:carryvibemobile/customviews/custom_textfield.dart';
 import 'package:carryvibemobile/customviews/custom_view.dart';
-import 'package:carryvibemobile/mvvm/auth/login/login_model.dart';
+import 'package:carryvibemobile/mvvm/auth/register/register_model.dart';
 import 'package:carryvibemobile/mvvm/auth/register/register_viewmodel.dart';
-import 'package:carryvibemobile/newtorklayer/service.dart';
 import 'package:carryvibemobile/util/app_constants.dart';
 import 'package:carryvibemobile/util/app_icon.dart';
+import 'package:carryvibemobile/util/enums.dart';
 import 'package:flutter/material.dart';
 import 'package:getwidget/getwidget.dart';
 
 class RegisterView extends StatelessWidget {
   final RegisterViewModel viewModel;
-  TextEditingController email = TextEditingController();
-  TextEditingController password = TextEditingController();
-
+  TextEditingController nameController = TextEditingController();
+  TextEditingController surnameController = TextEditingController();
+  TextEditingController userNameController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController passwordSendController = TextEditingController();
   RegisterView({required this.viewModel});
 
   @override
   Widget build(BuildContext context) {
+    void register() async {
+      if (nameController.text != "" &&
+          surnameController.text != "" &&
+          phoneController.text != "" &&
+          passwordController.text != "" &&
+          passwordSendController.text != "") {
+        if (passwordController.text.length < 6) {
+          GFToast.showToast("Şifreniz en az 6 haneli olmalıdır.", context,
+              toastPosition: GFToastPosition.BOTTOM);
+          return;
+        }
+        if (passwordController.text != passwordSendController.text) {
+          GFToast.showToast("Şifreler Aynı Değil", context,
+              toastPosition: GFToastPosition.BOTTOM);
+          return;
+        }
+        var response = await viewModel.postRequest(RegisterRequestModel(
+            firstName: nameController.text,
+            lastName: surnameController.text,
+            userName: userNameController.text,
+            phone: phoneController.text,
+            password: passwordController.text));
+        GFToast.showToast(response?.message, context,
+            toastPosition: GFToastPosition.BOTTOM);
+        if (response?.isStatus == true) {
+          Navigator.pop(context);
+        }
+      } else {
+        GFToast.showToast("Lütfen Eksikleri tamamlayınız", context,
+            toastPosition: GFToastPosition.BOTTOM);
+        return;
+      }
+    }
+
     return Scaffold(
         appBar: AppBar(
           title: Text("KAYIT OL"),
@@ -33,52 +69,58 @@ class RegisterView extends StatelessWidget {
               height: 50,
             ),
             CustomTextField(
-              controller: email,
+              controller: nameController,
               labelText: "Ad",
               obscureText: true,
             ),
             constraintSmall,
             CustomTextField(
-              controller: email,
+              controller: surnameController,
               labelText: "Soyad",
               obscureText: true,
             ),
             constraintSmall,
             CustomTextField(
-              controller: email,
-              labelText: "Email",
+              controller: userNameController,
+              labelText: "Kullanıcı Adı",
               obscureText: true,
             ),
             constraintSmall,
             CustomTextField(
-              controller: email,
+              controller: phoneController,
               labelText: "Telefon",
               obscureText: true,
             ),
             constraintSmall,
             CustomTextField(
-              controller: password,
+              controller: passwordController,
               labelText: "Şifre",
               obscureText: true,
             ),
             constraintSmall,
             CustomTextField(
-              controller: password,
+              controller: passwordSendController,
               labelText: "Şifre Tekrar",
               obscureText: true,
             ),
             constraintSmall,
-            PrimaryButton(text: "KAYIT OL", onPressed: () {}),
+            PrimaryButton(
+                text: "KAYIT OL",
+                onPressed: () {
+                  register();
+                }),
             constraintSmall,
             CustomContract(
                 text: "Üyelik sözleşmesini okudum ve",
                 textButton: "onaylıyorum.",
-                onPressed: () {}),
+                contract: Contract.uyelikSozlesmesi,
+                service: viewModel.service),
             CustomContract(
                 text:
                     "CarryVibe Gizlilik ve KVKK Bildirimi - Yurtdışı Aktarımı Açık Rıza Beyanını okudum",
                 textButton: "onaylıyorum",
-                onPressed: () {})
+                contract: Contract.kvkk,
+                service: viewModel.service)
           ],
         ));
   }

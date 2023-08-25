@@ -1,6 +1,5 @@
 import 'package:carryvibemobile/util/app_constants.dart';
 import 'package:flutter/material.dart';
-import 'package:getwidget/getwidget.dart';
 
 class CustomLabel extends StatelessWidget {
   final String text;
