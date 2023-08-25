@@ -41,7 +41,8 @@ class _CarrierAdsScreenState extends State<CarrierAdsScreen>
           departure: e.departureCity ?? "",
           destination: e.destinationCity ?? "",
           name: e.userName ?? "",
-          avatar: e.userAvatar ?? "",
+          avatar: e.userAvatar ??
+              "https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/female/68.png",
         );
       }).toList();
     }

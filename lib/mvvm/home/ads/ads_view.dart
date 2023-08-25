@@ -119,6 +119,42 @@ class _AdsScreenState extends State<AdsScreen>
     }
   }
 
+  void getAllSenderAds() async {
+    var model = await viewModel.getAllSenderAds();
+    if (model.isStatus == true && model.responseModel != null) {
+      var response = model.responseModel as List<dynamic>;
+      var senderAdsModel =
+          response.map((data) => SenderAdsModel.fromJson(data)).toList();
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) =>
+                  SenderAdsView(senderAdsModel: senderAdsModel),
+              fullscreenDialog: true));
+    } else {
+      GFToast.showToast(model.message, context,
+          toastPosition: GFToastPosition.BOTTOM);
+    }
+  }
+
+  void getAllCarrierAds() async {
+    var model = await viewModel.getAllCarrierAds();
+    if (model.isStatus == true && model.responseModel != null) {
+      var response = model.responseModel as List<dynamic>;
+      var carrierAdsModel =
+          response.map((data) => CarrierAdsModel.fromJson(data)).toList();
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) =>
+                  CarrierAdsView(carrierAdsModel: carrierAdsModel),
+              fullscreenDialog: true));
+    } else {
+      GFToast.showToast(model.message, context,
+          toastPosition: GFToastPosition.BOTTOM);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return CustomListView(service: Service.shared(), children: [
@@ -166,8 +202,17 @@ class _AdsScreenState extends State<AdsScreen>
             text: "Ara",
           ),
           constraint,
+          PrimaryButton(
+            onPressed: () {
+              selected == AdsStatus.sender
+                  ? getAllSenderAds()
+                  : getAllCarrierAds();
+            },
+            text: "Tüm İlanları Listele",
+          ),
+          /*
           HistoryView(
-              text: 'İstanbul, Türkiye -> Bursa, Türkiye', onPressed: () => {})
+              text: 'İstanbul, Türkiye -> Bursa, Türkiye', onPressed: () => {})*/
         ],
       ),
     ]);

@@ -14,8 +14,12 @@ enum ApiEnum {
   postCarrier,
   searchSenderAds,
   carrierSenderAds,
+  allSender,
+  allCarrier,
   getContract,
-  verifyTCKN
+  verifyTCKN,
+  bySender,
+  byCarrier
 }
 
 class MyHttpOverrides extends HttpOverrides {
@@ -54,6 +58,14 @@ class ServiceConstants {
         return "Common/GetContract";
       case ApiEnum.verifyTCKN:
         return "Common/GetTCKNVerify";
+      case ApiEnum.allCarrier:
+        return "Ads/GetAllCarrier";
+      case ApiEnum.allSender:
+        return "Ads/GetAllSender";
+      case ApiEnum.bySender:
+        return "Ads/GetBySender";
+      case ApiEnum.byCarrier:
+        return "Ads/GetByCarrier";
     }
   }
 

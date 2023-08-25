@@ -2,6 +2,7 @@ import 'package:carryvibemobile/manager/user_default_manager.dart';
 import 'package:carryvibemobile/mvvm/home/ads/ads_view.dart';
 import 'package:carryvibemobile/mvvm/home/ads/ads_viewmodel.dart';
 import 'package:carryvibemobile/mvvm/home/deliveries/deliveries_view.dart';
+import 'package:carryvibemobile/mvvm/home/deliveries/deliveries_viewmodel.dart';
 import 'package:carryvibemobile/mvvm/home/home_model.dart';
 import 'package:carryvibemobile/mvvm/home/profil/profil_view.dart';
 import 'package:carryvibemobile/mvvm/home/publish/publish_view.dart';
@@ -44,9 +45,10 @@ class _HomeScreenState extends State<HomeScreen> {
           icon: Icon(Icons.add_circle_outline),
           view: publishView),
       BottomBarModel(
-          title: "Teslimatlar",
-          icon: Icon(Icons.directions_car),
-          view: DeliveriesView()),
+          title: "İlanlarım",
+          icon: Icon(Icons.ads_click),
+          view:
+              DeliveriesView(viewModel: DeliveriesViewModel(service: service))),
       /*BottomBarModel(
           title: "Gelen Kutusu", icon: Icon(Icons.message), view: InboxView()),
       BottomBarModel(

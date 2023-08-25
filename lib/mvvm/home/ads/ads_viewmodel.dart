@@ -42,4 +42,16 @@ class AdsViewModel extends ChangeNotifier {
         queryItems: requestHeaders);
     return responseModel;
   }
+
+  FutureOr<BaseResponseModel> getAllSenderAds() async {
+    final responseModel =
+        await service.request(ServiceConstants.api(ApiEnum.allSender));
+    return responseModel;
+  }
+
+  FutureOr<BaseResponseModel> getAllCarrierAds() async {
+    final responseModel =
+        await service.request(ServiceConstants.api(ApiEnum.allCarrier));
+    return responseModel;
+  }
 }
