@@ -33,7 +33,8 @@ class MyHttpOverrides extends HttpOverrides {
 
 class ServiceConstants {
   static const String localHost = "https://localhost:7008/";
-
+  static const String test =
+      "http://ec2-52-57-91-104.eu-central-1.compute.amazonaws.com/";
   static String api(ApiEnum api) {
     switch (api) {
       case ApiEnum.login:
@@ -98,7 +99,7 @@ class Service {
   }
   Service._internal();
 
-  String url = ServiceConstants.localHost;
+  String url = ServiceConstants.test;
 
   Future<BaseResponseModel> request<U>(String? api,
       {Map<String, String>? queryItems,
