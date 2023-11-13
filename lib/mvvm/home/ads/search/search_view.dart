@@ -22,79 +22,68 @@ class SearchView extends StatelessWidget {
 }
 
 class SearchScreen extends StatefulWidget {
-  @override
   final Function(Places) onLocationSelected;
   final SearchViewModel viewModel;
+
   SearchScreen({required this.onLocationSelected, required this.viewModel});
-  _SearchScreenState createState() => _SearchScreenState(
-      onLocationSelected: onLocationSelected, viewModel: viewModel);
+
+  @override
+  _SearchScreenState createState() => _SearchScreenState();
 }
 
 class _SearchScreenState extends State<SearchScreen> {
-  final Function(Places) onLocationSelected;
-  final SearchViewModel viewModel;
+  String searchQuery = "";
+  List<Places> filteredPlaces = [];
 
-  _SearchScreenState(
-      {required this.onLocationSelected, required this.viewModel});
+  @override
+  void initState() {
+    super.initState();
+    filteredPlaces = widget.viewModel.places; // Başlangıçta tüm yerleri listele
+  }
+
+  void updateSearchQuery(String newQuery) {
+    setState(() {
+      searchQuery = newQuery.toLowerCase();
+      filteredPlaces = widget.viewModel.places
+          .where((place) => place.name.toLowerCase().contains(searchQuery))
+          .toList();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    final places = viewModel.places;
     return Scaffold(
-        appBar: AppBar(
-          title: Text('Konum'),
-        ),
-        body: CustomListView(
-          service: viewModel.service,
-          children: [
-            GFSearchBar(
-              searchList: places,
-              searchQueryBuilder: (query, list) async {
-                // You can perform any asynchronous filtering here if needed
-                return await list
-                    .where((item) =>
-                        item.name.toLowerCase().contains(query.toLowerCase()))
-                    .toList();
-              },
-              overlaySearchListItemBuilder: (Places? item) {
-                // Change the parameter type to String?
-                return Container(
-                  padding: const EdgeInsets.all(8),
-                  child: Column(
-                    children: [
-                      Text(
-                        item?.name ?? "",
-                        style: const TextStyle(fontSize: 18),
-                      ),
-                      Text(
-                        item?.formattedAdres ?? "",
-                        style: const TextStyle(fontSize: 18),
-                      ),
-                    ],
-                  ),
+      appBar: AppBar(
+        title: Text('Konum'),
+        foregroundColor: Colors.white,
+      ),
+      body: Column(
+        children: [
+          Padding(
+            padding: EdgeInsets.all(8.0),
+            child: TextField(
+              onChanged: updateSearchQuery,
+              decoration: InputDecoration(
+                labelText: 'Arama',
+                suffixIcon: Icon(Icons.search),
+              ),
+            ),
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: filteredPlaces.length,
+              itemBuilder: (context, index) {
+                final item = filteredPlaces[index];
+                return ListTile(
+                  title: Text(item.name),
+                  subtitle: Text(item.formattedAdres ?? ""),
+                  onTap: () => widget.onLocationSelected(item),
                 );
               },
-              onItemSelected: (Places? item) {
-                // Change the parameter type to String?
-                if (item != null) {
-                  onLocationSelected(item);
-                }
-              },
             ),
-
-            /*
-            HistoryView(
-                text: 'İstanbul, Türkiye -> Bursa, Türkiye',
-                onPressed: () => {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => MapSelectLastView(
-                                    lat: 40.999096,
-                                    long: 28.7971599,
-                                  ),
-                              fullscreenDialog: true))
-                    })*/
-          ],
-        ));
+          ),
+        ],
+      ),
+    );
   }
 }

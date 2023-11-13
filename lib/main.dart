@@ -39,7 +39,9 @@ class MainApp extends StatelessWidget {
           ],
           supportedLocales: [const Locale('tr')],
           title: 'CarryVibe',
-          theme: ThemeData(primarySwatch: primaryColor),
+          theme: ThemeData(
+              primarySwatch: primaryColor,
+              appBarTheme: AppBarTheme(color: primaryColor)),
           home: SplashScreen(),
         ));
   }

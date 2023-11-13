@@ -1,4 +1,5 @@
 import 'package:carryvibemobile/customviews/custom_ads.dart';
+import 'package:carryvibemobile/customviews/custom_label.dart';
 import 'package:carryvibemobile/customviews/custom_view.dart';
 import 'package:carryvibemobile/mvvm/home/ads/ads_model.dart';
 import 'package:carryvibemobile/newtorklayer/service.dart';
@@ -34,6 +35,9 @@ class _CarrierAdsScreenState extends State<CarrierAdsScreen>
   @override
   Widget build(BuildContext context) {
     List<Widget> getCustomAds() {
+      if (carrierAdsModel.isEmpty) {
+        return [CustomSubLabel(text: "İlan bulunamadı")];
+      }
       return carrierAdsModel.map((e) {
         return CustomAds(
           image: e.photoFirst ?? "",
