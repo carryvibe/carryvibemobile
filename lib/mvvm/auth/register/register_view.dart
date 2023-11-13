@@ -15,6 +15,7 @@ class RegisterView extends StatelessWidget {
   TextEditingController nameController = TextEditingController();
   TextEditingController surnameController = TextEditingController();
   TextEditingController userNameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController passwordSendController = TextEditingController();
@@ -25,6 +26,7 @@ class RegisterView extends StatelessWidget {
     void register() async {
       if (nameController.text != "" &&
           surnameController.text != "" &&
+          emailController.text != "" &&
           phoneController.text != "" &&
           passwordController.text != "" &&
           passwordSendController.text != "") {
@@ -42,6 +44,7 @@ class RegisterView extends StatelessWidget {
             firstName: nameController.text,
             lastName: surnameController.text,
             userName: userNameController.text,
+            email: emailController.text,
             phone: phoneController.text,
             password: passwordController.text));
         GFToast.showToast(response?.message, context,
@@ -83,6 +86,12 @@ class RegisterView extends StatelessWidget {
             CustomTextField(
               controller: userNameController,
               labelText: "Kullanıcı Adı",
+              obscureText: true,
+            ),
+            constraintSmall,
+            CustomTextField(
+              controller: emailController,
+              labelText: "Mail Adresi",
               obscureText: true,
             ),
             constraintSmall,

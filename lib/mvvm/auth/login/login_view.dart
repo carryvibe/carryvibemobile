@@ -70,7 +70,7 @@ class LoginViewState extends State<LoginView> {
         constraint,
         CustomTextField(
           controller: email,
-          labelText: "Kullanıcı Adı",
+          labelText: "Kullanıcı Adı / Mail / Telefon",
           obscureText: true,
         ),
         constraint,
