@@ -30,9 +30,7 @@ class ForgetPasswordView extends StatelessWidget {
     }
 
     return Scaffold(
-        appBar: AppBar(
-          title: Text("Şifremi Unuttum"),
-        ),
+        appBar: AppBar(title: Text("Şifremi Unuttum")),
         body: CustomListView(
           service: viewModel.service,
           children: [

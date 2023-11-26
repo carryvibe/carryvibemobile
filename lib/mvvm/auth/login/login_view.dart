@@ -81,13 +81,20 @@ class LoginViewState extends State<LoginView> {
           labelText: "Şifre",
           obscureText: true,
         ),
-        constraint,
-        /*Row(
+        Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            LabelButton(text: "Şifrenizi mi Unuttunuz ?", onPressed: () {})
+            LabelButton(
+                text: "Şifrenizi mi Unuttunuz ?",
+                onPressed: () {
+                  showModalBottomSheet(
+                      context: context,
+                      builder: (context) => ForgetPasswordView(
+                          viewModel: ForgetPasswordViewModel(
+                              service: viewModel.service)));
+                })
           ],
-        ),*/
+        ),
         PrimaryButton(text: "GİRİŞ YAP", onPressed: login),
         PrimaryButton(
             text: "KAYIT OL",
@@ -101,15 +108,6 @@ class LoginViewState extends State<LoginView> {
                           )));
             }),
         constraint,
-        LabelButton(
-            text: "Şifremi Unuttum",
-            onPressed: () {
-              showModalBottomSheet(
-                  context: context,
-                  builder: (context) => ForgetPasswordView(
-                      viewModel:
-                          ForgetPasswordViewModel(service: Service.shared())));
-            }),
         CustomContract(
             text: "Çerez metnini okudum ve",
             textButton: "onaylıyorum.",
