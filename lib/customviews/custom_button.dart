@@ -79,7 +79,10 @@ class LabelButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: onPressed,
-      child: Text(text),
+      child: Text(
+        text,
+        style: TextStyle(color: Colors.black),
+      ),
     );
   }
 }

@@ -20,11 +20,13 @@ class CustomTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GFTextField(
+      obscureText: obscureText,
       controller: controller,
       decoration: InputDecoration(
         labelText: labelText,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
+          borderSide: BorderSide(color: Colors.black),
         ),
       ),
       onChanged: onChanged,
@@ -58,7 +60,9 @@ class OtpTextField extends StatelessWidget {
       decoration: const InputDecoration(
         counterText: '',
         contentPadding: EdgeInsets.all(10.0),
-        border: OutlineInputBorder(),
+        border: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.black),
+        ),
       ),
       onChanged: onChanged,
     );
@@ -133,6 +137,7 @@ class CustomLocationTextField extends StatelessWidget {
         labelText: labelText,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
+          borderSide: BorderSide(color: Colors.black),
         ),
       ),
       onChanged: onChanged,
