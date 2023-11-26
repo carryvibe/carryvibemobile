@@ -3,6 +3,8 @@ import 'package:carryvibemobile/customviews/custom_contract.dart';
 import 'package:carryvibemobile/customviews/custom_label.dart';
 import 'package:carryvibemobile/customviews/custom_textfield.dart';
 import 'package:carryvibemobile/customviews/custom_view.dart';
+import 'package:carryvibemobile/mvvm/auth/forgetPassword/forget_password_view.dart';
+import 'package:carryvibemobile/mvvm/auth/forgetPassword/forget_password_viewmodel.dart';
 import 'package:carryvibemobile/mvvm/auth/login/login_model.dart';
 import 'package:carryvibemobile/mvvm/auth/login/login_viewmodel.dart';
 import 'package:carryvibemobile/mvvm/auth/otp/otp_view.dart';
@@ -99,6 +101,15 @@ class LoginViewState extends State<LoginView> {
                           )));
             }),
         constraint,
+        LabelButton(
+            text: "Şifremi Unuttum",
+            onPressed: () {
+              showModalBottomSheet(
+                  context: context,
+                  builder: (context) => ForgetPasswordView(
+                      viewModel:
+                          ForgetPasswordViewModel(service: Service.shared())));
+            }),
         CustomContract(
             text: "Çerez metnini okudum ve",
             textButton: "onaylıyorum.",

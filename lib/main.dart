@@ -41,7 +41,8 @@ class MainApp extends StatelessWidget {
           title: 'CarryVibe',
           theme: ThemeData(
               primarySwatch: primaryColor,
-              appBarTheme: AppBarTheme(color: primaryColor)),
+              appBarTheme: AppBarTheme(color: primaryColor),
+              canvasColor: primaryColor),
           home: SplashScreen(),
         ));
   }

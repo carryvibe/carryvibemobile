@@ -9,6 +9,7 @@ enum ApiEnum {
   verifyOtp,
   resendOtp,
   register,
+  forgetPassword,
   places,
   postSender,
   postCarrier,
@@ -45,6 +46,8 @@ class ServiceConstants {
         return "Auth/ResendOtp";
       case ApiEnum.register:
         return "Auth/Register";
+      case ApiEnum.forgetPassword:
+        return "Auth/ForgetPassword";
       case ApiEnum.places:
         return "Common/GetAllPlaces";
       case ApiEnum.postSender:
@@ -99,7 +102,7 @@ class Service {
   }
   Service._internal();
 
-  String url = ServiceConstants.test;
+  String url = ServiceConstants.localHost;
 
   Future<BaseResponseModel> request<U>(String? api,
       {Map<String, String>? queryItems,
