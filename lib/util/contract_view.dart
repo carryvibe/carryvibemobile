@@ -1,3 +1,4 @@
+import 'package:carryvibemobile/customviews/custom_button.dart';
 import 'package:carryvibemobile/util/app_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -50,5 +51,60 @@ class _ContractViewPageState extends State<ContractViewPage> {
           backgroundColor: appColor,
         ),
         body: SingleChildScrollView(child: Html(data: contract)));
+  }
+}
+
+class ContractApproveView extends StatelessWidget {
+  ContractModel contractModel;
+  Function(bool) selected;
+  ContractApproveView({required this.contractModel, required this.selected});
+  @override
+  Widget build(BuildContext context) {
+    return ContractApproveViewPage(
+        contractTitle: contractModel.contractTitle,
+        contract: contractModel.contract,
+        selected: selected);
+  }
+}
+
+class ContractApproveViewPage extends StatefulWidget {
+  String contractTitle, contract;
+  Function(bool) selected;
+  ContractApproveViewPage(
+      {required this.contractTitle,
+      required this.contract,
+      required this.selected,
+      Key? key})
+      : super(key: key);
+
+  @override
+  _ContractApproveViewPageState createState() =>
+      new _ContractApproveViewPageState(
+          contract: contract, contractTitle: contractTitle, selected: selected);
+}
+
+class _ContractApproveViewPageState extends State<ContractApproveViewPage> {
+  String contractTitle, contract;
+  Function(bool) selected;
+  _ContractApproveViewPageState(
+      {required this.contract,
+      required this.contractTitle,
+      required this.selected});
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(contractTitle),
+        backgroundColor: appColor,
+      ),
+      body: SingleChildScrollView(child: Html(data: contract)),
+      bottomNavigationBar: BottomAppBar(
+          // Altta sabit bir buton ekle
+          child: PrimaryButton(
+              text: "Sözleşmeyi Onayla",
+              onPressed: () {
+                selected(true);
+              })),
+    );
   }
 }

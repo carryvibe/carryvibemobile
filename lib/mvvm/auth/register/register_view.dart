@@ -19,17 +19,26 @@ class RegisterView extends StatelessWidget {
   TextEditingController phoneController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController passwordSendController = TextEditingController();
+  bool firstContract = false, secondContract = false;
   RegisterView({required this.viewModel});
 
   @override
   Widget build(BuildContext context) {
     void register() async {
+      if (!firstContract && !secondContract) {
+        GFToast.showToast(
+            "Lütfen Sözleşmeleri okuyunuz ve onaylayınız.", context,
+            toastPosition: GFToastPosition.BOTTOM);
+        return;
+      }
       if (nameController.text != "" &&
           surnameController.text != "" &&
           emailController.text != "" &&
           phoneController.text != "" &&
           passwordController.text != "" &&
-          passwordSendController.text != "") {
+          passwordSendController.text != "" &&
+          firstContract &&
+          secondContract) {
         if (passwordController.text.length < 6) {
           GFToast.showToast("Şifreniz en az 6 haneli olmalıdır.", context,
               toastPosition: GFToastPosition.BOTTOM);
@@ -119,17 +128,25 @@ class RegisterView extends StatelessWidget {
                   register();
                 }),
             constraintSmall,
-            CustomContract(
-                text: "Üyelik sözleşmesini okudum ve",
-                textButton: "onaylıyorum.",
-                contract: Contract.uyelikSozlesmesi,
-                service: viewModel.service),
-            CustomContract(
-                text:
-                    "CarryVibe Gizlilik ve KVKK Bildirimi - Yurtdışı Aktarımı Açık Rıza Beyanını okudum",
-                textButton: "onaylıyorum",
-                contract: Contract.kvkk,
-                service: viewModel.service)
+            CustomApproveContract(
+              text: "Üyelik sözleşmesini okudum ve",
+              textButton: "onaylıyorum.",
+              contract: Contract.uyelikSozlesmesi,
+              service: viewModel.service,
+              selected: (bool? value) {
+                firstContract = value ?? false;
+              },
+            ),
+            CustomApproveContract(
+              text:
+                  "CarryVibe Gizlilik ve KVKK Bildirimi - Yurtdışı Aktarımı Açık Rıza Beyanını okudum",
+              textButton: "onaylıyorum",
+              contract: Contract.kvkk,
+              service: viewModel.service,
+              selected: (bool? value) {
+                secondContract = value ?? false;
+              },
+            )
           ],
         ));
   }

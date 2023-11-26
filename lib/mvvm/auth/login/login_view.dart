@@ -109,8 +109,8 @@ class LoginViewState extends State<LoginView> {
             }),
         constraint,
         CustomContract(
-            text: "Çerez metnini okudum ve",
-            textButton: "onaylıyorum.",
+            text: "CarryVibe",
+            textButton: "Çerez Metni",
             contract: Contract.cerez,
             service: viewModel.service),
         CustomContract(
