@@ -102,7 +102,7 @@ class Service {
   }
   Service._internal();
 
-  String url = ServiceConstants.localHost;
+  String url = ServiceConstants.test;
 
   Future<BaseResponseModel> request<U>(String? api,
       {Map<String, String>? queryItems,
