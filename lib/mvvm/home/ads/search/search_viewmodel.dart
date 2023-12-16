@@ -12,12 +12,6 @@ class SearchViewModel extends ChangeNotifier {
   List<Places> places;
   SearchViewModel({required this.service, required this.places}) {}
 
-  FutureOr<BaseResponseModel?> senderPublish(Places model) async {
-    final responseModel =
-        await service.request(ServiceConstants.api(ApiEnum.places));
-    return responseModel;
-  }
-
   List<String> getPlaces() {
     return places.map((e) => e.name).toList();
   }

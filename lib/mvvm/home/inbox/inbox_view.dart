@@ -2,6 +2,7 @@ import 'package:carryvibemobile/customviews/custom_inbox.dart';
 import 'package:carryvibemobile/customviews/custom_view.dart';
 import 'package:carryvibemobile/mvvm/home/inbox/chat/chat_view.dart';
 import 'package:carryvibemobile/newtorklayer/service.dart';
+import 'package:carryvibemobile/util/app_constants.dart';
 import 'package:flutter/material.dart';
 
 class InboxView extends StatelessWidget {
@@ -26,8 +27,7 @@ class _InboxScreenState extends State<InboxScreen> {
         departure: "Küçükçekmece",
         destination: "Pendik",
         name: "Yunus Emre",
-        avatar:
-            "https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/female/68.png",
+        avatar: avatarImgUrl,
         onTap: () {
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => ChatView()));

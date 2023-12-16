@@ -1,7 +1,10 @@
+import 'dart:ffi';
+
 import 'package:carryvibemobile/customviews/custom_button.dart';
 import 'package:carryvibemobile/customviews/custom_dropdown.dart';
 import 'package:carryvibemobile/customviews/custom_label.dart';
 import 'package:carryvibemobile/customviews/custom_textfield.dart';
+import 'package:carryvibemobile/mvvm/home/ads/ads_model.dart';
 import 'package:carryvibemobile/mvvm/home/ads/search/maps_select_last_view.dart';
 import 'package:carryvibemobile/mvvm/home/ads/search/search_model.dart';
 import 'package:carryvibemobile/mvvm/home/ads/search/search_view.dart';
@@ -16,23 +19,36 @@ import 'package:intl/intl.dart';
 
 class CarrierPublishView extends StatelessWidget {
   final PublishViewModel viewModel;
-  CarrierPublishView({required this.viewModel});
+  final SenderAdsModel? senderAdsModel;
+  final Function()? onConfirm;
+  CarrierPublishView(
+      {required this.viewModel, this.senderAdsModel, this.onConfirm});
   @override
   Widget build(BuildContext context) {
-    return CarrierPublishScreen(viewModel: viewModel);
+    return CarrierPublishScreen(
+        viewModel: viewModel,
+        senderAdsModel: senderAdsModel,
+        onConfirm: onConfirm);
   }
 }
 
 class CarrierPublishScreen extends StatefulWidget {
   final PublishViewModel viewModel;
-  CarrierPublishScreen({required this.viewModel});
+  final SenderAdsModel? senderAdsModel;
+  final Function()? onConfirm;
+  CarrierPublishScreen(
+      {required this.viewModel, required this.senderAdsModel, this.onConfirm});
   @override
-  _CarrierPublishState createState() =>
-      _CarrierPublishState(viewModel: viewModel);
+  _CarrierPublishState createState() => _CarrierPublishState(
+      viewModel: viewModel,
+      senderAdsModel: senderAdsModel,
+      onConfirm: onConfirm);
 }
 
 class _CarrierPublishState extends State<CarrierPublishScreen> {
+  final Function()? onConfirm;
   final PublishViewModel viewModel;
+  final SenderAdsModel? senderAdsModel;
   TextEditingController startLocationController = TextEditingController();
   TextEditingController startDateTimeController = TextEditingController();
   TextEditingController finishLocationController = TextEditingController();
@@ -42,7 +58,8 @@ class _CarrierPublishState extends State<CarrierPublishScreen> {
   Places? startPlace, finishPlace;
   SelectMaps? startMaps, finishMaps;
   TextEditingController cargoDescription = TextEditingController();
-  _CarrierPublishState({required this.viewModel});
+  _CarrierPublishState(
+      {required this.viewModel, required this.senderAdsModel, this.onConfirm});
   String travel = "", cargoSize = "";
 
   @override
@@ -50,6 +67,8 @@ class _CarrierPublishState extends State<CarrierPublishScreen> {
     super.initState();
     travel = viewModel.getTravelTypes().first;
     cargoSize = viewModel.getCargoSizes().first;
+    startLocationController.text = senderAdsModel?.departureAddress ?? "";
+    finishLocationController.text = senderAdsModel?.destinationAddress ?? "";
   }
 
   Future<void> _selectDateTime(
@@ -141,23 +160,39 @@ class _CarrierPublishState extends State<CarrierPublishScreen> {
             description: cargoDescription.text,
             cargoSize: cargoSize,
             travelType: travel,
-            departurePlacesId: startPlace?.id ?? "",
-            departurePoint: startMaps?.Point ?? "",
-            departureCity: startMaps?.City ?? "",
-            departureCountry: startMaps?.Country ?? "",
-            departureDistrict: startMaps?.District ?? "",
-            departureAddress: startMaps?.Address ?? "",
+            departurePlacesId:
+                startPlace?.id ?? senderAdsModel?.departurePlacesId ?? "",
+            departurePoint:
+                startMaps?.Point ?? senderAdsModel?.departurePoint ?? "",
+            departureCity:
+                startMaps?.City ?? senderAdsModel?.departureCity ?? "",
+            departureCountry:
+                startMaps?.Country ?? senderAdsModel?.departureCountry ?? "",
+            departureDistrict:
+                startMaps?.District ?? senderAdsModel?.departureDistrict ?? "",
+            departureAddress:
+                startMaps?.Address ?? senderAdsModel?.departureAddress ?? "",
             departureTime: startDateTimeController.text,
-            destinationPlacesId: finishPlace?.id ?? "",
-            destinationPoint: finishMaps?.Point ?? "",
-            destinationCity: finishMaps?.City ?? "",
-            destinationCountry: finishMaps?.Country ?? "",
-            destinationDistrict: finishMaps?.District ?? "",
-            destinationAddress: finishMaps?.Address ?? "",
+            destinationPlacesId:
+                finishPlace?.id ?? senderAdsModel?.destinationPlacesId ?? "",
+            destinationPoint:
+                finishMaps?.Point ?? senderAdsModel?.destinationPoint ?? "",
+            destinationCity:
+                finishMaps?.City ?? senderAdsModel?.destinationCity ?? "",
+            destinationCountry:
+                finishMaps?.Country ?? senderAdsModel?.destinationCountry ?? "",
+            destinationDistrict: finishMaps?.District ??
+                senderAdsModel?.destinationDistrict ??
+                "",
+            destinationAddress:
+                finishMaps?.Address ?? senderAdsModel?.destinationAddress ?? "",
             destinationTime: finishDateTimeController.text));
     if (response.isStatus == true) {
       GFToast.showToast("İlan Başarılı ile yayınlanmıştır.", context,
           toastPosition: GFToastPosition.BOTTOM);
+      if (onConfirm != null) {
+        onConfirm!();
+      }
       setState(() {
         cargoDescription.text = "";
         startDateTimeController.text = "";

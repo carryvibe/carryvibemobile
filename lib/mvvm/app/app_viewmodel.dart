@@ -30,7 +30,8 @@ class AppViewModel extends ChangeNotifier {
     } else if (appModel.suggestionVersion.compareTo("1.0") > 0) {
       this.appVersion = AppVersion.suggestionUpdate;
     } else {
-      String? token = await UserDefaultManager.shared().getValue("token") ?? "";
+      String? token =
+          await UserDefaultManager.shared().getValue(UserKeys.token) ?? "";
       if (token != null) {
         this.appVersion = AppVersion.done;
         this.token = token;

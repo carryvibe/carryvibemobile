@@ -2,7 +2,9 @@ import 'package:carryvibemobile/customviews/custom_ads.dart';
 import 'package:carryvibemobile/customviews/custom_label.dart';
 import 'package:carryvibemobile/customviews/custom_view.dart';
 import 'package:carryvibemobile/mvvm/home/ads/ads_model.dart';
+import 'package:carryvibemobile/mvvm/home/ads/sender_ads_detail/sender_ads_detail_view.dart';
 import 'package:carryvibemobile/newtorklayer/service.dart';
+import 'package:carryvibemobile/util/app_constants.dart';
 import 'package:carryvibemobile/util/enums.dart';
 import 'package:flutter/material.dart';
 
@@ -46,8 +48,21 @@ class _SenderAdsScreenState extends State<SenderAdsScreen>
           departure: e.departureCity ?? "",
           destination: e.destinationCity ?? "",
           name: e.userName ?? "",
-          avatar: e.userAvatar ??
-              "https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/female/68.png",
+          avatar: e.userAvatar ?? avatarImgUrl,
+          onPressed: () {
+            showModalBottomSheet(
+              context: context,
+              isScrollControlled:
+                  true, // Tam ekran bottom sheet için bu parametre gerekli
+              builder: (context) {
+                return FractionallySizedBox(
+                  heightFactor: 0.9, // Ekranın tam yüksekliğini kullan
+                  child: SenderAdsDetailView(senderAdsModel: e),
+                );
+              },
+            );
+          },
+          onLongPress: () {},
         );
       }).toList();
     }
@@ -55,6 +70,7 @@ class _SenderAdsScreenState extends State<SenderAdsScreen>
     return Scaffold(
         appBar: AppBar(
           title: Text('Kargo İlanları'),
+          foregroundColor: Colors.white,
         ),
         body: CustomListView(
             service: Service.shared(),

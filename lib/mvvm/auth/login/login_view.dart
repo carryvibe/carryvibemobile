@@ -48,7 +48,7 @@ class LoginViewState extends State<LoginView> {
             login != null &&
             login.responseModel != null) {
           final viewModel = OtpViewModel(
-              model: LoginResponseModel.fromJson(login!.responseModel!),
+              model: LoginResponseModel.fromJson(login.responseModel),
               service: this.viewModel.service);
           Navigator.push(
               context,

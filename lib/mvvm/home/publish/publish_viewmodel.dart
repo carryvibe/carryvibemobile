@@ -11,13 +11,6 @@ class PublishViewModel extends ChangeNotifier {
   Service service;
   PublishViewModel({required this.service});
 
-  FutureOr<BaseResponseModel?> senderPublish(SenderRequestModel model) async {
-    final responseModel = await service.request(
-        ServiceConstants.api(ApiEnum.login),
-        requestModel: model.toJson());
-    return responseModel;
-  }
-
   FutureOr<List<Places>?> getAllPlaces() async {
     final responseModel =
         await service.request(ServiceConstants.api(ApiEnum.places));

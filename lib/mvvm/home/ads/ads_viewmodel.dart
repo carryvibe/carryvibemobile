@@ -54,4 +54,16 @@ class AdsViewModel extends ChangeNotifier {
         await service.request(ServiceConstants.api(ApiEnum.allCarrier));
     return responseModel;
   }
+
+  FutureOr<List<CarrierAdsModel>?> getByCarrier() async {
+    final responseModel =
+        await service.request(ServiceConstants.api(ApiEnum.byCarrier));
+    if (responseModel != null && responseModel.isStatus == true) {
+      var response = responseModel.responseModel as List<dynamic>;
+      var carrier =
+          response.map((data) => CarrierAdsModel.fromJson(data)).toList();
+      return carrier;
+    }
+    return null;
+  }
 }

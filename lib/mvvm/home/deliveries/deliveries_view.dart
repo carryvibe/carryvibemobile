@@ -60,8 +60,9 @@ class _DeliveriesScreenState extends State<DeliveriesScreen>
               departure: e.departureCity ?? "",
               destination: e.destinationCity ?? "",
               name: e.userName ?? "",
-              avatar: e.userAvatar ??
-                  "https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/female/68.png",
+              avatar: e.userAvatar ?? avatarImgUrl,
+              onPressed: () {},
+              onLongPress: () {},
             );
           }).toList();
         } else {
@@ -76,8 +77,9 @@ class _DeliveriesScreenState extends State<DeliveriesScreen>
               departure: e.departureCity ?? "",
               destination: e.destinationCity ?? "",
               name: e.userName ?? "",
-              avatar: e.userAvatar ??
-                  "https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/female/68.png",
+              avatar: e.userAvatar ?? avatarImgUrl,
+              onPressed: () {},
+              onLongPress: () {},
             );
           }).toList();
         } else {

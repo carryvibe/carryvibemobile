@@ -25,7 +25,8 @@ class AppConstants {
 }
 
 const constraint = SizedBox(height: bigValue);
-
+const avatarImgUrl =
+    "https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/female/68.png";
 const constraintSmall = SizedBox(height: smallValue);
 const bigValue = 16.0;
 const smallValue = 8.0;

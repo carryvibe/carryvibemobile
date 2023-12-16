@@ -1,59 +1,67 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserDefaultManager {
-  static final UserDefaultManager _shared = UserDefaultManager();
+  static final UserDefaultManager _shared = UserDefaultManager._internal();
+
   factory UserDefaultManager.shared() {
     return _shared;
   }
 
-  UserDefaultManager();
-  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+  UserDefaultManager._internal();
 
-  Future<void> setValue(String key, dynamic value) async {
-    SharedPreferences prefs = await _prefs;
+  Future<SharedPreferences> get _prefs async {
+    return await SharedPreferences.getInstance();
+  }
 
-    switch (value.runtimeType) {
-      case int:
-        await prefs.setInt(key, value);
-        break;
-      case bool:
-        await prefs.setBool(key, value);
-        break;
-      case double:
-        await prefs.setDouble(key, value);
-        break;
-      case String:
-        await prefs.setString(key, value);
-        break;
-      case [String]:
-        await prefs.setStringList(key, value);
-        break;
-      default:
-        throw Exception('Invalid data type');
+  Future<void> setValue(UserKeys key, dynamic value) async {
+    if (value == null) {
+      return;
+    }
+    final SharedPreferences prefs = await _prefs;
+
+    if (value is int) {
+      await prefs.setInt(key.value, value);
+    } else if (value is bool) {
+      await prefs.setBool(key.value, value);
+    } else if (value is double) {
+      await prefs.setDouble(key.value, value);
+    } else if (value is String) {
+      await prefs.setString(key.value, value);
+    } else if (value is List<String>) {
+      await prefs.setStringList(key.value, value);
+    } else {
+      throw Exception('Invalid data type');
     }
   }
 
-  Future<T?> getValue<T>(String key) async {
-    SharedPreferences prefs = await _prefs;
-
-    switch (T) {
-      case int:
-        return prefs.getInt(key) as T?;
-      case bool:
-        return prefs.getBool(key) as T?;
-      case double:
-        return prefs.getDouble(key) as T?;
-      case String:
-        return prefs.getString(key) as T?;
-      case [String]:
-        return prefs.getStringList(key) as T?;
-      default:
-        return null;
-    }
+  Future<dynamic> getValue(UserKeys key) async {
+    final SharedPreferences prefs = await _prefs;
+    return prefs.get(key.value);
   }
 
-  Future<void> removeValue(String key) async {
-    SharedPreferences prefs = await _prefs;
-    prefs.remove(key);
+  Future<void> removeValue(UserKeys key) async {
+    final SharedPreferences prefs = await _prefs;
+    await prefs.remove(key.value);
+  }
+}
+
+enum UserKeys { token, firstName, lastName, avatar, isVerifyId }
+
+extension UserKeysExtension on UserKeys {
+  String get value {
+    switch (this) {
+      case UserKeys.token:
+        return "token";
+      case UserKeys.firstName:
+        return "firstName";
+      case UserKeys.lastName:
+        return "lastName";
+      case UserKeys.avatar:
+        return "avatar";
+      case UserKeys.isVerifyId:
+        return "isVerifyId";
+      default:
+        return "Unknown";
+    }
   }
 }

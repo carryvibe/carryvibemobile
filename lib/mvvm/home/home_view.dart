@@ -17,7 +17,6 @@ class HomeView extends StatelessWidget {
   const HomeView({Key? key, required this.service}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    print(UserDefaultManager.shared().getValue("token"));
     return HomeScreen(service: service);
   }
 }

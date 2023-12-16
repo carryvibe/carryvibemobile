@@ -3,6 +3,7 @@ import 'package:carryvibemobile/customviews/custom_label.dart';
 import 'package:carryvibemobile/customviews/custom_view.dart';
 import 'package:carryvibemobile/mvvm/home/ads/ads_model.dart';
 import 'package:carryvibemobile/newtorklayer/service.dart';
+import 'package:carryvibemobile/util/app_constants.dart';
 import 'package:carryvibemobile/util/enums.dart';
 import 'package:flutter/material.dart';
 
@@ -45,15 +46,16 @@ class _CarrierAdsScreenState extends State<CarrierAdsScreen>
           departure: e.departureCity ?? "",
           destination: e.destinationCity ?? "",
           name: e.userName ?? "",
-          avatar: e.userAvatar ??
-              "https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/female/68.png",
+          avatar: e.userAvatar ?? avatarImgUrl,
+          onPressed: () {},
+          onLongPress: () {},
         );
       }).toList();
     }
 
     return Scaffold(
         appBar: AppBar(
-          title: Text('Kargo İlanları'),
+          title: Text('Kurye İlanları'),
         ),
         body: CustomListView(
             service: Service.shared(),

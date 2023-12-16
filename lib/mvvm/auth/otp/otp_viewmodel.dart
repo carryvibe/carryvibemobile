@@ -26,7 +26,12 @@ class OtpViewModel extends ChangeNotifier {
         requestModel:
             OtpRequestModel(otp: otp, token: model.token ?? "").toJson());
     if (responseModel.isStatus ?? false) {
-      UserDefaultManager.shared().setValue("token", model.token);
+      UserDefaultManager.shared().setValue(UserKeys.token, model.token);
+      UserDefaultManager.shared().setValue(UserKeys.firstName, model.firstName);
+      UserDefaultManager.shared().setValue(UserKeys.lastName, model.lastName);
+      UserDefaultManager.shared()
+          .setValue(UserKeys.isVerifyId, model.isVerifyId);
+      UserDefaultManager.shared().setValue(UserKeys.avatar, model.profileImage);
     }
     return responseModel;
   }

@@ -1,13 +1,10 @@
 import 'package:carryvibemobile/customviews/custom_button.dart';
-import 'package:carryvibemobile/customviews/custom_contract.dart';
-import 'package:carryvibemobile/customviews/custom_label.dart';
 import 'package:carryvibemobile/customviews/custom_textfield.dart';
 import 'package:carryvibemobile/customviews/custom_view.dart';
 import 'package:carryvibemobile/mvvm/auth/verifyId/verify_model.dart';
 import 'package:carryvibemobile/mvvm/auth/verifyId/verify_viewmodel.dart';
 import 'package:carryvibemobile/util/app_constants.dart';
 import 'package:carryvibemobile/util/app_icon.dart';
-import 'package:carryvibemobile/util/enums.dart';
 import 'package:flutter/material.dart';
 import 'package:getwidget/getwidget.dart';
 

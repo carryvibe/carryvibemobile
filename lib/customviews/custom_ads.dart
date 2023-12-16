@@ -12,6 +12,8 @@ class CustomAds extends StatelessWidget {
   final String destination;
   final String avatar;
   final String name;
+  final Function() onPressed;
+  final Function() onLongPress;
   const CustomAds(
       {Key? key,
       required this.image,
@@ -19,35 +21,39 @@ class CustomAds extends StatelessWidget {
       required this.departure,
       required this.destination,
       required this.name,
-      required this.avatar})
+      required this.avatar,
+      required this.onPressed,
+      required this.onLongPress})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GFListTile(
-        avatar: image != ""
-            ? Image.memory(
-                base64Decode(image),
-                width: 40,
-              )
-            : AppIcon(
-                assest: IconAssest.logo,
-                width: 40,
-              ),
-        title: CustomSecondLabel(text: date),
-        subTitle:
-            LocationLabels(departure: departure, destination: destination),
-        color: Colors.white,
-        description: Row(
-          children: [
-            GFAvatar(
-                backgroundImage: NetworkImage(avatar),
-                shape: GFAvatarShape.circle),
-            const SizedBox(
-              width: 8,
+      avatar: image != ""
+          ? Image.memory(
+              base64Decode(image),
+              width: 40,
+            )
+          : AppIcon(
+              assest: IconAssest.logo,
+              width: 40,
             ),
-            Text(name)
-          ],
-        ));
+      title: CustomSecondLabel(text: date),
+      subTitle: LocationLabels(departure: departure, destination: destination),
+      color: Colors.white,
+      description: Row(
+        children: [
+          GFAvatar(
+              backgroundImage: NetworkImage(avatar),
+              shape: GFAvatarShape.circle),
+          const SizedBox(
+            width: 8,
+          ),
+          Text(name)
+        ],
+      ),
+      onLongPress: onLongPress,
+      onTap: onPressed,
+    );
   }
 }

@@ -39,7 +39,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
           constraint: false,
           children: [
             constraint,
-            CustomProfile(name: "Yunus Emre Coşkun"),
+            CustomProfile(),
             constraint,
             /*
             Row(
@@ -84,7 +84,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
   }
 
   void logout() async {
-    await UserDefaultManager.shared().removeValue("token");
+    await UserDefaultManager.shared().removeValue(UserKeys.token);
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(

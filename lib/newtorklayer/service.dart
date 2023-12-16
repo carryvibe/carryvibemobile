@@ -102,7 +102,7 @@ class Service {
   }
   Service._internal();
 
-  String url = ServiceConstants.test;
+  String url = ServiceConstants.localHost;
 
   Future<BaseResponseModel> request<U>(String? api,
       {Map<String, String>? queryItems,
@@ -110,7 +110,7 @@ class Service {
     var uri = Uri.parse(url + (api ?? ""));
     if (queryItems == null) queryItems = Map<String, String>();
     uri = uri.replace(queryParameters: queryItems);
-    String? token = await UserDefaultManager.shared().getValue('token');
+    String? token = await UserDefaultManager.shared().getValue(UserKeys.token);
     Map<String, String> requestHeaders = {
       'Content-type': 'application/json; charset=UTF-8',
       'Accept': 'application/json',
