@@ -37,7 +37,7 @@ class _CarrierAdsScreenState extends State<CarrierAdsScreen>
   Widget build(BuildContext context) {
     List<Widget> getCustomAds() {
       if (carrierAdsModel.isEmpty) {
-        return [CustomSubLabel(text: "İlan bulunamadı")];
+        return [CustomSubLabel(text: "İlan bulunamadı ")];
       }
       return carrierAdsModel.map((e) {
         return CustomAds(
